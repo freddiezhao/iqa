@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="web_smoke_clickandflirt" parallel="none">  
+    
+    <parameter name="project" value="phoenix"/> 
+  	<parameter name="server" value="local"/>   
+  	<parameter name="os" value="win7"/> 
+  	<parameter name="platform" value="web"/> 
+  	<parameter name="site" value="cheekylovers"/>
+  	<parameter name="build" value="live"/>
+  	<parameter name="location" value="gbr"/>
+  	<parameter name="proxy" value="gbr"/>
+  	<parameter name="browserName" value="firefox"/>
+  	<parameter name="browserVersion" value="def"/>
+  	<parameter name="saucelabsUser" value="def"/>
+    <parameter name="saucelabsKey" value="def"/>
+    	
+  	<test name="web_smoke_clickandflirt"> 
+  		<classes>
+    		<class name="phoenix.web.test_suites.smoke.SmokeTraceTS"></class>
+  		</classes>
+  	</test>	
+
+</suite>

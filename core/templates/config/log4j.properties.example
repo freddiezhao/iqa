@@ -1,0 +1,35 @@
+log4j.rootLogger=debug, console, email, html
+log4j.logger.org.apache.http=warn
+
+# CONSOLE
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{[dd-MM-yyyy HH:mm:ss]} - [%p]- %c{10} - %m (%rms)%n
+
+# FILE
+log4j.appender.file=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.file.DatePattern='.'yyyy-MM-dd
+log4j.appender.file.File=./reports/${testName}/${testDate}/logs/dailylog.txt
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{dd-MM-yyyy HH:mm:ss} - %p:%l: %m (%rms)%n
+
+# HTML
+log4j.appender.html=org.apache.log4j.FileAppender
+log4j.appender.html.File=./reports/${testSuiteName}/${testSuiteDate}/${testSuiteTime}/log_${testSuiteTime}.html
+log4j.appender.html.layout=org.apache.log4j.HTMLLayout
+log4j.appender.html.layout.Title=HTML Layout Example
+log4j.appender.html.layout.LocationInfo=true
+
+# EMAIL
+log4j.appender.email=core.helpers.SmtpAppender
+log4j.appender.email.SMTPHost=smtp.gmail.com
+log4j.appender.email.SMTPDebug=false
+log4j.appender.email.From=kertis.is@gmail.com
+log4j.appender.email.To=kertis.is@gmail.com
+log4j.appender.email.SMTPUsername=kertis.is@gmail.com
+log4j.appender.email.SMTPPassword=gmail.537847
+log4j.appender.email.Subject=
+log4j.appender.email.cc=
+log4j.appender.email.layout=org.apache.log4j.PatternLayout
+log4j.appender.email.layout.ConversionPattern=%d{[dd-MM-yyyy HH:mm:ss]} - [%p]- %c{10} - %m (%rms)%n
+log4j.appender.email.BufferSize=64

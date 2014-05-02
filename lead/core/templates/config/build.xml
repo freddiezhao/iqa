@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project name="Ant-Test" default="main" basedir=".">
+<property file="build.properties" />
+  <!-- Sets variables which can later be used. -->
+  <!-- The value of a property is accessed via ${} -->
+  <property name="src.dir" location="${src}" />
+  <property name="build.dir" location="${bin}" />
+  <property name="log4jcfg.dir" location="${config}" />	
+  <record name="logfile.txt" action="start" append="true" />
+  <property name="extlibs.dir" location="${lib}" />
+
+
+  <!-- Variables used for testng testin -->
+  <property name="test.dir" location="${src}" />
+  <property name="test.report.dir" location="reports" />
+
+  <!-- Define the classpath which includes the testng.jar and the classes after compiling-->
+  <path id="testng.class.path">
+	<pathelement location="${src.dir}/config/phoenix"/>
+  	
+    <fileset dir="${extlibs.dir}">
+      <include name="*.jar"/>
+    </fileset>
+
+    	<pathelement location="${extlibs.dir}" />
+    	<pathelement location="${build.dir}" /> 
+  </path>
+
+  <!-- Deletes the existing build, docs and dist directory-->
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+
+  <!-- Creates the  build, docs and dist directory-->
+  <target name="makedir">
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${test.report.dir}" />
+  </target>
+
+	    <target name="compile" depends="clean, makedir">
+      <javac srcdir="${src.dir}" destdir="${build.dir}">
+        <classpath refid="testng.class.path" />
+      </javac>
+    	<copy todir="${build.dir}">
+  	  <fileset dir="${log4jcfg.dir}" excludes="**/*.java"/>
+  	</copy>
+    </target>
+	
+	  <target name="testng" depends="compile">
+    <testng printsummary="on" fork="true" haltonfailure="yes" enableTestListenerEvents="true">
+      <classpath refid="testng.class.path" />
+	  <test name="runner.TestRun"/>
+    </testng>
+  </target>
+  
+  <!-- Run the testng Tests -->
+  <!-- Output is XML, could also be plain-->
+	<target name="main" depends="compile"> 
+	    <description>Main target</description>
+	   <java classname="runner.TestRun">
+	   <arg value="-h"/>
+	   <classpath refid="testng.class.path" />
+	   </java>
+	  </target>
+</project> 
+
