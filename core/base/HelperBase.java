@@ -195,7 +195,7 @@ public class HelperBase
 	 */
 	public RedmineHelper redmine()
 	{
-		return manager.redmine();
+		return manager.redmines();
 	}
 
 	/**

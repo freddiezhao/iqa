@@ -192,7 +192,7 @@ public class TestHelper extends HelperBase
 
 		if (project().config().REDMINE_POST_ERRORS)
 		{
-			project().redmine().postError();
+			project().redmines().postError();
 		}
 
 		if (p_errors.length > 0)

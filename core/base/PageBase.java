@@ -37,11 +37,11 @@ public class PageBase
 	}
 
 	/**
-	 * Link method to PhoenixManager
+	 * Link method to LeadManager
 	 * 
-	 * @return PhoenixManager instance
+	 * @return LeadManager instance
 	 */
-	public LeadManager phoenix()
+	public LeadManager lead()
 	{
 		return manager.lead();
 	}

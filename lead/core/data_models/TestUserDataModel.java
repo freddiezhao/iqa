@@ -1,6 +1,5 @@
 package lead.core.data_models;
 
-import lead.core.config.extensions.ConfigExt;
 import lead.core.data_models.UserProfileDataModel.LookingFor;
 import lead.core.data_models.UserProfileDataModel.LookingForEthnicity;
 import lead.core.data_models.UserProfileDataModel.LookingForReligious;
@@ -284,54 +283,6 @@ public class TestUserDataModel extends DataModelBase
 		membershipStatus = p_membership;
 
 		return this;
-	}
-
-	/**
-	 * Defines a user membership status
-	 * 
-	 * @return User membership status
-	 */
-	public int defineMembershipStatus()
-	{
-		int membershipID = 0;
-
-		switch (getSiteName())
-		{
-			case ConfigExt.SITE_ID_CLICKANDFLIRT:
-			{
-				membershipID = getGender().equals("male") ? 0 : 1;
-			}
-			case ConfigExt.SITE_ID_LOCALSGOWILD:
-			{
-				membershipID = getGender().equals("male") ? 0 : 1;
-			}
-			case ConfigExt.SITE_ID_LOCALSGODATING:
-			{
-				membershipID = getGender().equals("male") ? 0 : 0;
-			}
-			case ConfigExt.SITE_ID_CHEECKYLOVERS:
-			{
-				membershipID = getGender().equals("male") ? 0 : 1;
-			}
-			case ConfigExt.SITE_ID_DATEFINDER:
-			{
-				membershipID = getGender().equals("male") ? 1 : 1;
-			}
-			case ConfigExt.SITE_ID_EBONYFLIRT:
-			{
-				membershipID = getGender().equals("male") ? 0 : 1;
-			}
-			case ConfigExt.SITE_ID_MATUREAFFECTION:
-			{
-				membershipID = getGender().equals("male") ? 0 : 0;
-			}
-			case ConfigExt.SITE_ID_SAUVAGESDUCOIN:
-			{
-				membershipID = getGender().equals("male") ? 0 : 1;
-			}
-		}
-
-		return membershipID;
 	}
 
 	/**

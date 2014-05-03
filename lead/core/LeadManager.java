@@ -7,7 +7,6 @@ import lead.core.helpers.extensions.DBHelperExt;
 import lead.core.helpers.extensions.RandomizerHelperExt;
 import lead.core.helpers.extensions.RedmineHelperExt;
 import core.ApplicationManager;
-import core.base.MailBase;
 import core.base.ProjectBase;
 
 /**
@@ -106,7 +105,7 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	 * 
 	 * @return PageWebHelper instance
 	 */
-	public PageRedmineHelper redminePages()
+	public PageRedmineHelper redmine()
 	{
 		if (redminePages == null)
 		{
@@ -152,7 +151,7 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	 * @return RedmineHelperExt instance
 	 */
 	@Override
-	public RedmineHelperExt redmine()
+	public RedmineHelperExt redmines()
 	{
 		if (redmine == null)
 		{
@@ -202,36 +201,6 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	public void setTestUser()
 	{
 		testUserModel = new TestUserDataModel(manager);
-	}
-
-	/**
-	 * Provides access to mail jelpers
-	 * 
-	 * @return MailBase instance
-	 */
-	public MailBase mail()
-	{
-		switch (config().MAIL_GATEWAY)
-		{
-			case "gmail":
-			{
-				return gmail();
-
-			}
-			case "hotmail":
-			{
-				return hotmail();
-			}
-			case "yahoo":
-			{
-				return yahoo();
-			}
-
-			default:
-			{
-				return null;
-			}
-		}
 	}
 
 	/**
@@ -434,42 +403,22 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	}
 
 	/**
-	 * Is site name ClickandFlirt
+	 * Is site name Redmine TN
 	 * 
 	 * @return True or false
 	 */
-	public boolean isClickandflirt()
+	public boolean isRedmineTN()
 	{
-		return (testModel().getSiteName().equals("clickandflirt"));
+		return (testModel().getSiteName().contains("together"));
 	}
 
 	/**
-	 * Is site name CheekyLovers
+	 * Is site name Redmine PH
 	 * 
 	 * @return True or false
 	 */
-	public boolean isCheekylovers()
+	public boolean isRedminePH()
 	{
-		return (testModel().getSiteName().equals("cheekylovers"));
-	}
-
-	/**
-	 * Is site name EbonyFlirt
-	 * 
-	 * @return True or false
-	 */
-	public boolean isEbonyflirt()
-	{
-		return (testModel().getSiteName().equals("ebonyflirt"));
-	}
-
-	/**
-	 * Is site name LocalsGoWild
-	 * 
-	 * @return True or false
-	 */
-	public boolean isLocalsgowild()
-	{
-		return (testModel().getSiteName().equals("localsgowild"));
+		return (testModel().getSiteName().equals("phoenix"));
 	}
 }

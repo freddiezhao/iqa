@@ -122,18 +122,7 @@ public abstract class TestSuiteBase extends TestBase
 			Assert.assertTrue(false, log().getErrorsAndWarnings());
 		}
 
-		if (testModel().getPlatform().equals(config().PLATFORM_WEB))
-		{
-			wd().doBasicAuthentification();
-			wd().openURL(testModel().getSiteURL() + "/admin");
-			phoenix().setCountryCookie(testModel().getLocation());
-			phoenix().webDriver().openURL(testModel().getSiteURL());
-		}
-		else if (testModel().getPlatform().equals(config().PLATFORM_MOBILE))
-		{
-			phoenix().webDriver().openURL(testModel().getSiteURL());
-			phoenix().setCountryCookie(testModel().getLocation());
-		}
+		phoenix().webDriver().openURL(testModel().getSiteURL());
 	}
 
 	/**

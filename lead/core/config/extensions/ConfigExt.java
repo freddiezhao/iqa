@@ -12,12 +12,14 @@ public class ConfigExt extends Config
 {
 	// Project properties file
 	private final PropertyLoaderHelper projectProperties;
-	// Mail properties file
-	private static PropertyLoaderHelper mailProperties = null;
 
 	// Backend access
 	public String BACKEND_USERNAME;
 	public String BACKEND_PASSWORD;
+
+	// Backend access
+	public String REDMINE_USERNAME;
+	public String REDMINE_PASSWORD;
 
 	// Locations
 	public final static String LOCATION_DEF = "def";
@@ -59,24 +61,10 @@ public class ConfigExt extends Config
 	public final static String LOCATION_DEU_IP = "80.237.249.248";
 	public final static String LOCATION_ZAF_IP = "41.222.38.155";
 
-	// Mail
-	public static String MAIL_GATEWAY;
-	public static String MAIL_USER;
-	public static String MAIL_PASSWORD;
-	public static String MAIL_HTML_PATH;
-
 	// Sites identifiers
-	public final static String SITE_ID_CLICKANDFLIRT = "clickandflirt";
-	public final static String SITE_ID_LOCALSGOWILD = "localsgowild";
-	public final static String SITE_ID_MATUREAFFECTION = "matureaffection";
-	public final static String SITE_ID_LOCALSGODATING = "localsgodating";
-	public final static String SITE_ID_DATEFINDER = "datefinder";
-	public final static String SITE_ID_EBONYFLIRT = "ebonyflirt";
-	public final static String SITE_ID_CHEECKYLOVERS = "cheekylovers";
-	public final static String SITE_ID_WILDBUDDIES = "wildbuddies";
-	public final static String SITE_ID_BENAUGHTY = "benaughty";
-	public final static String SITE_ID_FLIRT = "flirt";
-	public final static String SITE_ID_SAUVAGESDUCOIN = "sauvagesducoin";
+	public final static String SITE_ID_REDMINE_PH = "redmine.platformphoenix.com";
+	public final static String SITE_ID_REDMINE_TN = "redmine.togethernetworks.com";
+	public final static String SITE_ID_STAFF = "staff.maximagroup.com";
 
 	/**
 	 * Initializes ConfigExt
@@ -89,7 +77,7 @@ public class ConfigExt extends Config
 		super(p_manager);
 
 		/*** PROJECT PROPERTIES ***/
-		projectProperties = loadResFile("phoenix\\project.properties");
+		projectProperties = loadResFile("lead\\project.properties");
 
 		// Http
 		HTTP_USERNAME = getProjectProperty("http.username");
@@ -120,56 +108,8 @@ public class ConfigExt extends Config
 		REDMINE_PROJECT_KEY = getProjectProperty("redmine.project.key");
 		REDMINE_POST_ERRORS = Boolean.parseBoolean(getProjectProperty("redmine.post.errors"));
 
-		/*** MAIL PROPERTIES ***/
-		mailProperties = loadResFile("phoenix\\mail.properties");
-
-		MAIL_GATEWAY = getMailProperty("imap.gateway");
-		MAIL_USER = getMailUser(MAIL_GATEWAY);
-		MAIL_PASSWORD = getMailPassword(MAIL_GATEWAY);
-		MAIL_HTML_PATH = getMailProperty("imap.html.path");
-	}
-
-	private String getMailUser(String p_gateway)
-	{
-		String result = null;
-		switch (p_gateway)
-		{
-			case "yahoo":
-				result = mailProperties.loadAsRes("imap.yahoo.user");
-				break;
-			case "hotmail":
-				result = mailProperties.loadAsRes("imap.hotmail.user");
-				break;
-			default: // gmail
-				result = mailProperties.loadAsRes("imap.gmail.user");
-				break;
-		}
-		return result;
-	}
-
-	private String getMailPassword(String p_gateway)
-	{
-		String result = null;
-		switch (p_gateway)
-		{
-			case "yahoo":
-			{
-				result = mailProperties.loadAsRes("imap.yahoo.password");
-				break;
-			}
-			case "hotmail":
-			{
-				result = mailProperties.loadAsRes("imap.hotmail.password");
-				break;
-			}
-			default: // gmail
-			{
-				result = mailProperties.loadAsRes("imap.gmail.password");
-				break;
-			}
-		}
-
-		return result;
+		REDMINE_USERNAME = getProjectProperty("redmine.username");
+		REDMINE_PASSWORD = getProjectProperty("redmine.password");
 	}
 
 	/**
@@ -198,24 +138,6 @@ public class ConfigExt extends Config
 
 			return null;
 		}
-	}
-
-	/**
-	 * Gets a mail property
-	 * 
-	 * @param p_propertyName
-	 *            Property name in the configuration file
-	 * @return Parameter from properties file
-	 */
-	protected String getMailProperty(String p_propertyName)
-	{
-		return mailProperties.loadAsRes(p_propertyName);
-	}
-
-	public String getMailSettings()
-	{
-		return BACKEND_PASSWORD;
-
 	}
 
 	/**

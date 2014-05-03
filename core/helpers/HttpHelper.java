@@ -245,7 +245,7 @@ public class HttpHelper extends HelperBase
 
 		if (p_area == null)
 		{
-			webElements = wd().getWebElements(By.tagName(p_target));
+			webElements = wd().getWebElements(By.tagName(p_target), false);
 		}
 		else
 		{

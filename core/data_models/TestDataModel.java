@@ -629,41 +629,14 @@ public class TestDataModel extends DataModelBase
 		return this;
 	}
 
+	/**
+	 * Sets site URL
+	 * 
+	 * @return
+	 */
 	public TestDataModel setSiteURL()
 	{
-
-		String prefix = "";
-		String postfix = ".com";
-
-		if (siteName.contains("."))
-		{
-			postfix = "";
-		}
-
-		if (build.equals(manager.project().config().BUILD_LIVE))
-		{
-			if (platform.equals(config().PLATFORM_WEB))
-			{
-				prefix = "https://www.";
-			}
-			else if (platform.equals(config().PLATFORM_MOBILE))
-			{
-				prefix = "https://m.";
-			}
-
-			siteURL = prefix + siteName + postfix;
-		}
-		else if (build.equals(manager.project().config().BUILD_REL))
-		{
-			if (platform.equals(config().PLATFORM_WEB))
-			{
-
-			}
-			else if (platform.equals(config().PLATFORM_MOBILE))
-			{
-
-			}
-		}
+		siteURL = "https://" + siteName;
 
 		return this;
 	}

@@ -21,7 +21,7 @@ public class TestBaseExt extends TestBase
 	 */
 	protected PageRedmineHelper redmine()
 	{
-		return phoenix().redminePages();
+		return phoenix().redmine();
 	}
 
 	/**

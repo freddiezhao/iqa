@@ -12,6 +12,7 @@ import core.config.Config;
 import core.data_models.TestDataModel;
 import core.helpers.BrowserHelper;
 import core.helpers.CronosHelper;
+import core.helpers.ExcelHelper;
 import core.helpers.HttpHelper;
 import core.helpers.LoggerHelper;
 import core.helpers.RandomizerHelper;
@@ -153,6 +154,16 @@ public abstract class TestBase
 	public BrowserHelper browser()
 	{
 		return manager.browser();
+	}
+
+	/**
+	 * Link method to ExcelHelper
+	 * 
+	 * @return ExcelHelper instance
+	 */
+	public ExcelHelper excel()
+	{
+		return manager.excel();
 	}
 
 	/**

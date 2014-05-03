@@ -14,7 +14,7 @@ public interface ProjectBase
 
 	public Config config();
 
-	public RedmineHelper redmine();
+	public RedmineHelper redmines();
 
 	public String getProxy(String p_location);
 }

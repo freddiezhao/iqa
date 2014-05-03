@@ -1,6 +1,8 @@
 package lead.core.helpers;
 
+import lead.redmine.page_objects.HomePage;
 import lead.redmine.page_objects.IndexPage;
+import lead.redmine.page_objects.ReportsPage;
 import core.ApplicationManager;
 import core.base.HelperBase;
 
@@ -10,8 +12,10 @@ import core.base.HelperBase;
  */
 public class PageRedmineHelper extends HelperBase
 {
-	// Page objects - sites
+	// Page objects
 	private IndexPage indexPage;
+	private HomePage homePage;
+	private ReportsPage reportsPage;
 
 	/**
 	 * Initializes PageWebHelper
@@ -37,6 +41,36 @@ public class PageRedmineHelper extends HelperBase
 		}
 
 		return indexPage;
+	}
+
+	/**
+	 * Home page instance
+	 * 
+	 * @return HomePage instance
+	 */
+	public HomePage homePage()
+	{
+		if (homePage == null)
+		{
+			homePage = new HomePage(manager);
+		}
+
+		return homePage;
+	}
+
+	/**
+	 * Reports page instance
+	 * 
+	 * @return ReportsPage instance
+	 */
+	public ReportsPage reportsPage()
+	{
+		if (reportsPage == null)
+		{
+			reportsPage = new ReportsPage(manager);
+		}
+
+		return reportsPage;
 	}
 
 }

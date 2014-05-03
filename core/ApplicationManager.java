@@ -14,10 +14,9 @@ import core.helpers.BrowserMobHelper;
 import core.helpers.CSVHelper;
 import core.helpers.CronosHelper;
 import core.helpers.DBHelper;
+import core.helpers.ExcelHelper;
 import core.helpers.FileHelper;
-import core.helpers.GmailHelper;
 import core.helpers.HarHelper;
-import core.helpers.HotmailHelper;
 import core.helpers.HttpHelper;
 import core.helpers.JavaScriptHelper;
 import core.helpers.LoggerHelper;
@@ -31,7 +30,6 @@ import core.helpers.TestHelper;
 import core.helpers.ThreadHelper;
 import core.helpers.WebDriverHelper;
 import core.helpers.XmlRpcHelper;
-import core.helpers.YahooHelper;
 
 /**
  * The main class, manager
@@ -71,9 +69,7 @@ public class ApplicationManager
 	private RedmineHelper redmine;
 	private RobotHelper robot;
 	private ThreadHelper thread;
-	private GmailHelper gmailHelper;
-	private YahooHelper yahooHelper;
-	private HotmailHelper hotmailHelper;
+	private ExcelHelper excel;
 
 	// Data Models
 	private static TestDataModel testModel;
@@ -524,7 +520,7 @@ public class ApplicationManager
 	 * 
 	 * @return RedmineHelper instance
 	 */
-	public RedmineHelper redmine()
+	public RedmineHelper redmines()
 	{
 		if (redmine == null)
 		{
@@ -547,6 +543,23 @@ public class ApplicationManager
 	}
 
 	/**
+	 * Provides methods for working with Wxcel files
+	 * 
+	 * @return ExcelHelper instance
+	 */
+	public ExcelHelper excel()
+	{
+		if (excel == null)
+		{
+			excel = new ExcelHelper(this);
+		}
+
+		return excel;
+	}
+
+	;
+
+	/**
 	 * Provides methods for working with CSV files
 	 * 
 	 * @param p_pathToFile
@@ -558,54 +571,6 @@ public class ApplicationManager
 	public CSVHelper csv(String p_pathToFile, String p_splitter)
 	{
 		return new CSVHelper(this, p_pathToFile, p_splitter);
-	}
-
-	/**
-	 * Provides methods for Gmail
-	 * 
-	 * @return GmailHelper instance
-	 */
-	public GmailHelper gmail()
-	{
-
-		if (gmailHelper == null)
-		{
-			gmailHelper = new GmailHelper(this);
-		}
-
-		return gmailHelper;
-	}
-
-	/**
-	 * Provides methods for Yahoo
-	 * 
-	 * @return YahooHelper instance
-	 */
-	public YahooHelper yahoo()
-	{
-
-		if (yahooHelper == null)
-		{
-			yahooHelper = new YahooHelper(this);
-		}
-
-		return yahooHelper;
-	}
-
-	/**
-	 * Provides methods for Hotmail
-	 * 
-	 * @return HotmailHelper instance
-	 */
-	public HotmailHelper hotmail()
-	{
-
-		if (hotmailHelper == null)
-		{
-			hotmailHelper = new HotmailHelper(this);
-		}
-
-		return hotmailHelper;
 	}
 
 }

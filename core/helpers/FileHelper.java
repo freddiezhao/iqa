@@ -326,6 +326,7 @@ public class FileHelper extends HelperBase
 			fw.flush();
 			fw.write("");
 			fw.close();
+
 			return true;
 		}
 
@@ -333,8 +334,8 @@ public class FileHelper extends HelperBase
 		{
 			log().error("Cannot create file " + e.toString() + " path: " + p_pathToFile);
 		}
+
 		return false;
 
 	}
-
 }

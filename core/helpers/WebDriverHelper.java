@@ -752,6 +752,16 @@ public class WebDriverHelper extends HelperBase
 		return select.getFirstSelectedOption().getText();
 	}
 
+	public void verifySelectedOptionText(By p_locator, String p_textExpected)
+	{
+		String textActual = p_textExpected;
+
+		if (!textActual.equals(p_textExpected))
+		{
+			throw new TestException("Text '" + textActual + "'is not equal to '" + p_textExpected + "'");
+		}
+	}
+
 	/**
 	 * Clears and types value in a text field
 	 * 
@@ -1217,20 +1227,6 @@ public class WebDriverHelper extends HelperBase
 	}
 
 	/**
-	 * Waits for a web element is appeared
-	 * 
-	 * @param p_webElement
-	 *            Web element locator
-	 * @param p_timeOut
-	 *            Waiting timeout
-	 * @return Web element is appeared, or not
-	 */
-	public boolean waitForAppear(By p_locator, int p_timeOut)
-	{
-		return waitForAppear(p_locator, p_timeOut, false);
-	}
-
-	/**
 	 * Waits for a web element is visible
 	 * 
 	 * @param p_webElement
@@ -1620,10 +1616,23 @@ public class WebDriverHelper extends HelperBase
 	 *            Block with web elements on a page
 	 * @return Web elements list
 	 */
-	public List<WebElement> getWebElements(By p_webElementsBlock)
+	public List<WebElement> getWebElements(By p_webElementsBlock, boolean p_isThrowable)
 	{
 		log().info("Get web elements list => " + p_webElementsBlock);
-		return wd().driver().findElements(p_webElementsBlock);
+
+		try
+		{
+			return wd().driver().findElements(p_webElementsBlock);
+		}
+		catch (Exception p_ex)
+		{
+			if (p_isThrowable)
+			{
+				throw new TestException("Cannot get web elements list from " + p_webElementsBlock + "\n" + p_ex);
+			}
+
+			return null;
+		}
 	}
 
 	/**
@@ -1637,6 +1646,32 @@ public class WebDriverHelper extends HelperBase
 	{
 		log().info("Get web element => " + p_locator);
 		return wd().driver().findElement(p_locator);
+	}
+
+	/**
+	 * Gets web element
+	 * 
+	 * @param p_webElement
+	 *            Web element locator
+	 * @return Web elements list
+	 */
+	public WebElement getWebElementFromWebElement(WebElement p_webElement, By p_locator, boolean p_isThrowable)
+	{
+		log().info("Get web element from web element => " + p_webElement + " locator: " + p_locator);
+
+		try
+		{
+			return p_webElement.findElement(p_locator);
+		}
+		catch (Exception p_ex)
+		{
+			if (p_isThrowable)
+			{
+				throw new TestException("Cannot get web element " + p_locator + " from web element " + p_webElement + "\n" + p_ex);
+			}
+
+			return null;
+		}
 	}
 
 	/**
