@@ -69,13 +69,12 @@ public class RedmineTests extends TestBaseExt
 			excel().addFormula(fileName, formulas, false);
 
 			// Write head Overtimes
-			head.put(0, new Object[] { "", "", "", "" });
-			head.put(1, new Object[] { "", "Overtime", "Time", "Rate" });
+			head.put(0, new Object[] { "", "Overtime", "Time", "Rate" });
 			excel().write(fileName, head, formatHead, false);
 
 			// Write Overtimes
 			excel().write(fileName, overtimeIssues, formatIssue, false);
-			formulas.put(0, new String[] { "", "", "SUM(C" + (testingIssues.size() + 5) + ":C" + (overtimeIssues.size() + testingIssues.size() + 4) + ")", "" });
+			formulas.put(0, new String[] { "", "", "SUM(C" + (testingIssues.size() + 4) + ":C" + (overtimeIssues.size() + testingIssues.size() + 3) + ")", "" });
 			excel().addFormula(fileName, formulas, false);
 		}
 		catch (Exception p_ex)
