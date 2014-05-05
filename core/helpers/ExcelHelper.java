@@ -9,8 +9,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.formula.FormulaParseException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -25,43 +29,14 @@ public class ExcelHelper extends HelperBase
 		super(p_manager);
 	}
 
-	public void create(String p_pathToFile, Map<Integer, Object[]> p_data)
+	public void create(String p_pathToFile)
 	{
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet("Sample sheet");
-
-		Set<Integer> keyset = p_data.keySet();
-		int rownum = 0;
-
-		for (Integer key : keyset)
-		{
-			Row row = sheet.createRow(rownum++);
-			Object[] objArr = p_data.get(key);
-
-			int cellnum = 0;
-
-			for (Object obj : objArr)
-			{
-				Cell cell = row.createCell(cellnum++);
-
-				if (obj instanceof Date)
-				{
-					cell.setCellValue((Date) obj);
-				}
-				else if (obj instanceof Boolean)
-				{
-					cell.setCellValue((Boolean) obj);
-				}
-				else if (obj instanceof String)
-				{
-					cell.setCellValue((String) obj);
-				}
-				else if (obj instanceof Double)
-				{
-					cell.setCellValue((Double) obj);
-				}
-			}
-		}
+		// Create a new row in current sheet
+		Row row = sheet.createRow(0);
+		// Create a new cell in current row
+		Cell cell = row.createCell(0);
 
 		try
 		{
@@ -79,6 +54,195 @@ public class ExcelHelper extends HelperBase
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void write(String p_pathToFile, Map<Integer, Object[]> p_data, String[] p_format, boolean p_rewrite)
+	{
+		log().debug("Write data to file => " + p_pathToFile);
+
+		try
+		{
+			FileInputStream file = new FileInputStream(new File(p_pathToFile));
+
+			HSSFWorkbook workbook = new HSSFWorkbook(file);
+			HSSFSheet sheet = workbook.getSheetAt(0);
+
+			Set<Integer> data = p_data.keySet();
+			int rownum = 0;
+
+			HSSFCellStyle style = workbook.createCellStyle();
+			HSSFFont font = workbook.createFont();
+
+			setFontStyle(p_format[0], font);
+			setForegroundColor(p_format[1], style);
+			style.setFont(font);
+
+			for (Integer key : data)
+			{
+				Row row = null;
+
+				if (!p_rewrite)
+				{
+					row = sheet.createRow(sheet.getLastRowNum() + 1);
+				}
+				else
+				{
+					row = sheet.createRow(rownum++);
+				}
+
+				Object[] objArr = p_data.get(key);
+
+				int cellnum = 0;
+
+				for (Object obj : objArr)
+				{
+
+					Cell cell = row.createCell(cellnum++);
+					cell.setCellStyle(style);
+
+					if (obj instanceof Date)
+					{
+						cell.setCellValue((Date) obj);
+
+					}
+					else if (obj instanceof Boolean)
+					{
+						cell.setCellValue((Boolean) obj);
+
+					}
+					else if (obj instanceof String)
+					{
+						cell.setCellValue((String) obj);
+
+					}
+					else if (obj instanceof Double)
+					{
+						cell.setCellValue((Double) obj);
+
+					}
+				}
+			}
+
+			file.close();
+
+			FileOutputStream outFile = new FileOutputStream(new File(p_pathToFile));
+			workbook.write(outFile);
+			outFile.close();
+
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private void setForegroundColor(String p_colorName, HSSFCellStyle p_style)
+	{
+		switch (p_colorName)
+		{
+			case "gray":
+			{
+				p_style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+				p_style.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+
+				break;
+			}
+			case "orange":
+			{
+				p_style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+				p_style.setFillForegroundColor(new HSSFColor.LIGHT_ORANGE().getIndex());
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	private void setFontStyle(String p_styleName, HSSFFont p_font)
+	{
+		switch (p_styleName)
+		{
+			case "bold":
+			{
+				p_font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	public void addFormula(String p_pathToFile, Map<Integer, String[]> p_data, boolean p_rewrite)
+	{
+		try
+		{
+			FileInputStream file = new FileInputStream(new File(p_pathToFile));
+			HSSFWorkbook workbook = new HSSFWorkbook(file);
+			HSSFSheet sheet = workbook.getSheetAt(0);
+
+			Set<Integer> keyset = p_data.keySet();
+			int rownum = 0;
+
+			for (Integer key : keyset)
+			{
+				Row row = null;
+
+				if (!p_rewrite)
+				{
+					row = sheet.createRow(sheet.getLastRowNum() + 1);
+				}
+				else
+				{
+					row = sheet.createRow(rownum++);
+				}
+
+				String[] objArr = p_data.get(key);
+
+				int cellnum = 0;
+
+				for (String obj : objArr)
+				{
+					Cell cell = row.createCell(cellnum++);
+
+					if (obj.equals(""))
+					{
+						cell.setCellValue(obj);
+					}
+					else
+					{
+						cell.setCellFormula(obj);
+					}
+				}
+			}
+
+			file.close();
+
+			FileOutputStream outFile = new FileOutputStream(new File(p_pathToFile));
+			workbook.write(outFile);
+			outFile.close();
+
+		}
+		catch (FormulaParseException e)
+		{
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 	public void read(String p_pathToFile)

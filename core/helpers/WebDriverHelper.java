@@ -1104,7 +1104,7 @@ public class WebDriverHelper extends HelperBase
 					attributeValue = webElement.getAttribute(p_attribute);
 				}
 
-				log().info("Get attribute [" + p_attribute + "] from [" + p_locator + "] => " + attributeValue);
+				log().debug("Get attribute [" + p_attribute + "] from [" + p_locator + "] => " + attributeValue);
 			}
 			catch (Exception p_ex)
 			{
@@ -1618,7 +1618,7 @@ public class WebDriverHelper extends HelperBase
 	 */
 	public List<WebElement> getWebElements(By p_webElementsBlock, boolean p_isThrowable)
 	{
-		log().info("Get web elements list => " + p_webElementsBlock);
+		log().debug("Get web elements list => " + p_webElementsBlock);
 
 		try
 		{

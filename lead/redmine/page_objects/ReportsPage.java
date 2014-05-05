@@ -55,12 +55,12 @@ public class ReportsPage extends PageBase
 
 	public Map<Integer, Object[]> getIssues(String p_member)
 	{
-		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
-		Map<Integer, Object[]> overtimes = new HashMap<Integer, Object[]>();
-		Map<Integer, Object[]> testing = new HashMap<Integer, Object[]>();
+		// Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
+		// Map<Integer, Object[]> overtimes = new HashMap<Integer, Object[]>();
+		// Map<Integer, Object[]> testing = new HashMap<Integer, Object[]>();
 		Map<Integer, Object[]> reportsTmp = new HashMap<Integer, Object[]>();
 
-		reportsTmp.put(0, new Object[] { "Activity", "Issue", "Time" });
+		// reports.put(0, new Object[] { "", "Issue", "Time", "Rate" });
 
 		String activity = "";
 		String currentMember = wd().getText(elements().blockCurrentMemberName(p_member));
@@ -83,11 +83,41 @@ public class ReportsPage extends PageBase
 				String issue = wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueName(), true).getText();
 				String hours = wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText();
 				String minutes = wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueMinutes(), true).getText();
-				String time = hours + minutes;
+
+				// String time = hours + minutes;// string().replaceSubstring(minutes, ".", ",");
+
+				Double time = Double.parseDouble(hours + string().replaceSubstring(minutes, "'", ""));
 
 				reportsTmp.put(i, new Object[] { activity, issue, time });
+
 			}
 		}
+
+		return reportsTmp;
+
+	}
+
+	public Map<Integer, Object[]> getTesting(Map<Integer, Object[]> reportsTmp, String p_member)
+	{
+		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
+
+		int i = 0;
+
+		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
+		{
+			if (entry.getValue()[0].toString().equals("Testing") || entry.getValue()[0].toString().equals("Development"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "" });
+			}
+		}
+
+		return reports;
+
+	}
+
+	public Map<Integer, Object[]> getOvertimes(Map<Integer, Object[]> reportsTmp, String p_member)
+	{
+		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
 
 		int i = 0;
 
@@ -95,21 +125,9 @@ public class ReportsPage extends PageBase
 		{
 			if (entry.getValue()[0].toString().contains("Overtime"))
 			{
-				overtimes.put(i, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2] });
-				i++;
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "x2" });
 			}
-			else
-			{
-				testing.put(i, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2] });
-				i++;
-			}
-
-			// log().info(entry.getKey() + " " + entry.getValue()[0] + " " + entry.getValue()[1] + " " +
-			// entry.getValue()[2]);
 		}
-
-		reports.putAll(overtimes);
-		reports.putAll(testing);
 
 		return reports;
 
