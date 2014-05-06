@@ -13,6 +13,34 @@ public class ReportsPageLocators
 	public By selectDate = By.id("period");
 	public By selectCriterias = By.id("criterias");
 	public By blockTimeReport = By.id("time-report");
+	public By blockDetailedTimeReport = By.xpath("//*[contains(@class,'time-entries')]");
+	public By blockNextPage = By.xpath("//*[@class='pagination']/a[@class='next']");
+	public By blockLastPage = By.xpath("(//*[@class='pagination']/a[@class='page'])[last()]");
+
+	public By blockDetailedDate()
+	{
+		return By.xpath("./td[2]");
+	}
+
+	public By blockDetailedActivityName()
+	{
+		return By.xpath("./td[4]");
+	}
+
+	public By blockDetailedIssueName()
+	{
+		return By.xpath("./td[6]");
+	}
+
+	public By blockDetailedComment()
+	{
+		return By.xpath("./td[7]");
+	}
+
+	public By blockDetailedIssues(String p_member)
+	{
+		return By.xpath("//tr//a[contains(text(),'" + p_member + "')]/parent::td/parent::tr");
+	}
 
 	public By blockCurrentMember(String p_member)
 	{
@@ -43,24 +71,12 @@ public class ReportsPageLocators
 
 	public By blockIssueName()
 	{
-		/*
-		return By
-				.xpath("//tr[preceding-sibling::tr[td[contains(text(),'" + p_currentMember
-						+ "')]/parent::tr] and following-sibling::tr[td[contains(text(),'" + p_nextMember + "')]/parent::tr]][" + p_index + "]/td[3]");
-		*/
-
 		return By.xpath("./td[3]");
 	}
 
-	// (//tr[td[contains(text(),'Golovko')]]/following-sibling::tr[td[1][contains(text(),' ')]])[1]
 	public By blockIssueHours()
 	{
-		return By.xpath("./td[@class='hours']/span[1]");
-	}
-
-	public By blockIssueMinutes()
-	{
-		return By.xpath("./td[@class='hours']/span[2]");
+		return By.xpath("./td[@class='hours'][1]");
 	}
 
 	public By blockActivity()

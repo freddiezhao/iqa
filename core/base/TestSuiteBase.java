@@ -115,7 +115,7 @@ public abstract class TestSuiteBase extends TestBase
 		try
 		{
 			phoenix().initPhoenix(p_project, p_server, p_os, p_platform, p_site, p_build, p_location, p_proxy, p_browserName, p_browserVersion,
-					p_saucelabsUser, p_saucelabsKey);
+					p_saucelabsUser, p_saucelabsKey, p_site);
 		}
 		catch (Exception p_ex)
 		{

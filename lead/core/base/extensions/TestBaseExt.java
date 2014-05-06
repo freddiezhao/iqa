@@ -4,6 +4,7 @@ import lead.core.config.extensions.ConfigExt;
 import lead.core.data_models.TestUserDataModel;
 import lead.core.helpers.PageRedmineHelper;
 import lead.core.helpers.extensions.DBHelperExt;
+import lead.core.helpers.extensions.ExcelHelperExt;
 import lead.core.helpers.extensions.RandomizerHelperExt;
 import core.base.TestBase;
 import core.data_models.TestDataModel;
@@ -75,5 +76,16 @@ public class TestBaseExt extends TestBase
 	public ConfigExt config()
 	{
 		return phoenix().config();
+	}
+
+	/**
+	 * Link method to ExcelHelperExt
+	 * 
+	 * @return ExcelHelperExt instance
+	 */
+	@Override
+	public ExcelHelperExt excel()
+	{
+		return manager.lead().excel();
 	}
 }

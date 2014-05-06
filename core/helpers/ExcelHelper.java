@@ -16,7 +16,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.formula.FormulaParseException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import core.ApplicationManager;
 import core.base.HelperBase;
@@ -56,7 +59,13 @@ public class ExcelHelper extends HelperBase
 		}
 	}
 
-	public void write(String p_pathToFile, Map<Integer, Object[]> p_data, String[] p_format, boolean p_rewrite)
+	public void write(String p_pathToFile, Map<Integer, Object[]> p_data,
+			String p_cellFontStyle,
+			String p_fontHeight,
+			String p_cellFontColor,
+			String p_cellColor,
+			boolean p_border,
+			boolean p_rewrite)
 	{
 		log().debug("Write data to file => " + p_pathToFile);
 
@@ -73,9 +82,23 @@ public class ExcelHelper extends HelperBase
 			HSSFCellStyle style = workbook.createCellStyle();
 			HSSFFont font = workbook.createFont();
 
-			setFontStyle(p_format[0], font);
-			setForegroundColor(p_format[1], style);
+			setFontStyle(p_cellFontStyle, font);
+			setFontColor(p_cellFontColor, font);
+			setFontHeight(Integer.parseInt(p_fontHeight), font);
+			setForegroundColor(p_cellColor, style);
 			style.setFont(font);
+
+			if (p_border)
+			{
+				style.setBorderBottom(CellStyle.BORDER_THIN);
+				style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+				style.setBorderLeft(CellStyle.BORDER_THIN);
+				style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+				style.setBorderRight(CellStyle.BORDER_THIN);
+				style.setRightBorderColor(IndexedColors.BLACK.getIndex());
+				style.setBorderTop(CellStyle.BORDER_THIN);
+				style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+			}
 
 			for (Integer key : data)
 			{
@@ -96,9 +119,7 @@ public class ExcelHelper extends HelperBase
 
 				for (Object obj : objArr)
 				{
-
-					Cell cell = row.createCell(cellnum++);
-					cell.setCellStyle(style);
+					Cell cell = createCell(workbook, row, cellnum++, style, CellStyle.ALIGN_GENERAL, CellStyle.VERTICAL_BOTTOM);
 
 					if (obj instanceof Date)
 					{
@@ -113,7 +134,6 @@ public class ExcelHelper extends HelperBase
 					else if (obj instanceof String)
 					{
 						cell.setCellValue((String) obj);
-
 					}
 					else if (obj instanceof Double)
 					{
@@ -138,6 +158,16 @@ public class ExcelHelper extends HelperBase
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private Cell createCell(Workbook wb, Row row, int column, HSSFCellStyle p_style, short halign, short valign)
+	{
+		Cell cell = row.createCell(column);
+		p_style.setAlignment(halign);
+		p_style.setVerticalAlignment(valign);
+		cell.setCellStyle(p_style);
+
+		return cell;
 	}
 
 	private void setForegroundColor(String p_colorName, HSSFCellStyle p_style)
@@ -177,6 +207,30 @@ public class ExcelHelper extends HelperBase
 			{
 				break;
 			}
+		}
+	}
+
+	private void setFontColor(String p_colorName, HSSFFont p_font)
+	{
+		switch (p_colorName)
+		{
+			case "blue":
+			{
+				p_font.setColor(IndexedColors.BLUE.getIndex());
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	private void setFontHeight(int p_fontHeight, HSSFFont p_font)
+	{
+		if (p_fontHeight != 0)
+		{
+			p_font.setFontHeightInPoints((short) p_fontHeight);
 		}
 	}
 

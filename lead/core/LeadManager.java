@@ -4,6 +4,7 @@ import lead.core.config.extensions.ConfigExt;
 import lead.core.data_models.TestUserDataModel;
 import lead.core.helpers.PageRedmineHelper;
 import lead.core.helpers.extensions.DBHelperExt;
+import lead.core.helpers.extensions.ExcelHelperExt;
 import lead.core.helpers.extensions.RandomizerHelperExt;
 import lead.core.helpers.extensions.RedmineHelperExt;
 import core.ApplicationManager;
@@ -29,6 +30,7 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	private static DBHelperExt db;
 	private static RandomizerHelperExt randomizer;
 	private static RedmineHelperExt redmine;
+	private static ExcelHelperExt excel;
 
 	/**
 	 * Initializes PhoenixManager
@@ -71,14 +73,14 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	 * @return true - successful initialization, false - failed initialization
 	 */
 	public boolean initPhoenix(String p_project, String p_server, String p_os, String p_platform, String p_site, String p_build, String p_location,
-			String p_proxy, String p_browserName, String p_browserVersion, String p_saucelabsUser, String p_saucelabsKey)
+			String p_proxy, String p_browserName, String p_browserVersion, String p_saucelabsUser, String p_saucelabsKey, String p_siteURL)
 	{
 		// Check connection to DB
 		if (db().isConnected())
 		{
 			// Launch the browser
 			return super.init(p_project, p_server, p_os, p_platform, p_site, p_build, p_location, p_proxy, p_browserName, p_browserVersion,
-					p_saucelabsUser, p_saucelabsKey);
+					p_saucelabsUser, p_saucelabsKey, p_siteURL);
 		}
 
 		return false;
@@ -128,6 +130,21 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 			db = new DBHelperExt(this);
 		}
 		return db;
+	}
+
+	/**
+	 * Provides access to extension methods for working with Excel
+	 * 
+	 * @return ExcelHelperExt instance
+	 */
+	@Override
+	public ExcelHelperExt excel()
+	{
+		if (excel == null)
+		{
+			excel = new ExcelHelperExt(this);
+		}
+		return excel;
 	}
 
 	/**
@@ -407,7 +424,7 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	 * 
 	 * @return True or false
 	 */
-	public boolean isRedmineTN()
+	public boolean isRedmineTNetworks()
 	{
 		return (testModel().getSiteName().contains("together"));
 	}
@@ -417,8 +434,8 @@ public class LeadManager extends ApplicationManager implements ProjectBase
 	 * 
 	 * @return True or false
 	 */
-	public boolean isRedminePH()
+	public boolean isRedminePhoenix()
 	{
-		return (testModel().getSiteName().equals("phoenix"));
+		return (testModel().getSiteName().contains("phoenix"));
 	}
 }

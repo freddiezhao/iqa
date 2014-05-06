@@ -632,12 +632,11 @@ public class TestDataModel extends DataModelBase
 	/**
 	 * Sets site URL
 	 * 
-	 * @return
+	 * @return TestDataModel instance
 	 */
-	public TestDataModel setSiteURL()
+	public TestDataModel setSiteURL(String p_siteURL)
 	{
-		siteURL = "https://" + siteName;
-
+		siteURL = p_siteURL;
 		return this;
 	}
 }

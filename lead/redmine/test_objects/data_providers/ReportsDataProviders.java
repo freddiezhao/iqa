@@ -9,52 +9,38 @@ import lead.core.base.extensions.TestBaseExt;
 public class ReportsDataProviders extends TestBaseExt
 {
 
-	public Object[][] reportsTNData()
+	public Object[][] reportsTNetworksData()
 	{
+		String hours = "176";
+		String project = "general-porduct";
+		String period = "lm";
+
 		return new Object[][]
 		{
-				// Positive test
-				{ "general-porduct", "lm", "Koloskov" }
+				// { project, period, "Koloskov", "Koloskov Andrey", "Middle", "7040", hours },
+				{ project, period, "Savin", "Savin Vitaliy", "Senior", "8500", hours },
+		// { project, period, "Chudlya", "Chudlya Artur", "Middle", "7040", hours },
+		// { project, period, "Zemlyanskiy", "Zemlyanskiy Alexander", "Middle", "7040", hours },
+		// { project, period, "Romanichenko", "Romanichenko Anton", "Middle", "7040", hours },
+		// { project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "Middle", "7680", hours }
 		};
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Object[][] registrationDataFemale()
+	public Object[][] reportsPhoenixData()
 	{
-		// Generate email
-		String emailTemplate = "pitter.spot@ag.net.ua";
-		String emailUniquePrefix = cronos().getCurrentDate("HHmmssyyMMdd") + randomizer().getRandomInt(1, 100).toString();
-		String emailName = string().getSubstringBefore(emailTemplate, "@");
-		String emailDomain = string().getSubstringAfter(emailTemplate, "@");
-		String email = emailName + "+" + emailUniquePrefix + "@" + emailDomain;
-		// Gender
-		String gender = "female";
-		// Password
-		String password = "qweqweQ";
-		// Birth date
-		String birthDay = "12";
-		String birthMonth = "11";
-		String birthYear = "1990";
-		// City
-		String city = "London";
-		String postcode = "BR1 5";
-		// Location
-		String location = city + ", " + postcode;
-
-		testUser().setGender(gender)
-				.setEmail(email)
-				.setCity(city)
-				.setPostcode(postcode)
-				.setPassword(password)
-				.setBirthDate(birthYear + "-" + birthMonth + "-" + birthDay);
+		String hours = "176";
+		String project = "dating-2";
+		String period = "last_month";
 
 		return new Object[][]
 		{
-				// Positive test
-				{ gender, email, password, location, birthDay, birthMonth, birthYear }
+				{ project, period, "Golovko", "Golovko Alexander", "Middle", "7040", hours },
+		// { project, period, "Koloskov", "Koloskov Andrey", "Middle", "7040", hours },
+		// { project, period, "Savin", "Savin Vitaliy", "Senior", "8500", hours },
+		// { project, period, "Chudlya", "Chudlya Artur", "Middle", "7040", hours },
+		// { project, period, "Zemlyanskiy", "Zemlyanskiy Alexander", "Middle", "7040", hours },
+		// { project, period, "Romanichenko", "Romanichenko Anton", "Middle", "7040", hours },
+		// { project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "Middle", "7680", hours }
 		};
 	}
 }

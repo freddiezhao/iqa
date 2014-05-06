@@ -55,12 +55,7 @@ public class ReportsPage extends PageBase
 
 	public Map<Integer, Object[]> getIssues(String p_member)
 	{
-		// Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
-		// Map<Integer, Object[]> overtimes = new HashMap<Integer, Object[]>();
-		// Map<Integer, Object[]> testing = new HashMap<Integer, Object[]>();
 		Map<Integer, Object[]> reportsTmp = new HashMap<Integer, Object[]>();
-
-		// reports.put(0, new Object[] { "", "Issue", "Time", "Rate" });
 
 		String activity = "";
 		String currentMember = wd().getText(elements().blockCurrentMemberName(p_member));
@@ -79,22 +74,77 @@ public class ReportsPage extends PageBase
 			}
 			else
 			{
-
 				String issue = wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueName(), true).getText();
-				String hours = wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText();
-				String minutes = wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueMinutes(), true).getText();
+				Double hours = Double.parseDouble(wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText());
 
-				// String time = hours + minutes;// string().replaceSubstring(minutes, ".", ",");
-
-				Double time = Double.parseDouble(hours + string().replaceSubstring(minutes, "'", ""));
-
-				reportsTmp.put(i, new Object[] { activity, issue, time });
-
+				reportsTmp.put(i, new Object[] { activity, issue, hours });
 			}
 		}
 
 		return reportsTmp;
+	}
 
+	public Map<Integer, Object[]> getIssuesDetailed(String p_member)
+	{
+		Map<Integer, Object[]> reportsTmp = new HashMap<Integer, Object[]>();
+
+		int pageNumber = 1;
+		int pagesCount = getNumbersOfPages();
+
+		while (pageNumber <= pagesCount)
+		{
+			if (!wd().isElementPresent(elements().blockDetailedIssues(p_member)))
+			{
+				openNextPage();
+			}
+			else
+			{
+				List<WebElement> issues = wd().getWebElements(elements().blockDetailedIssues(p_member), true);
+
+				log().info("Issues Total: " + issues.size());
+
+				for (int i = 0; i < issues.size(); i++)
+				{
+					String date = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedDate(), true).getText();
+					String activity = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedActivityName(), true).getText();
+					String issue = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedIssueName(), true).getText();
+					String comment = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedComment(), true).getText();
+					Double hours = Double.parseDouble(wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText());
+
+					reportsTmp.put(i, new Object[] { date, activity, issue, comment, hours });
+				}
+
+				// Check on next page
+				if (pageNumber > 1 && pageNumber < pagesCount)
+				{
+					openNextPage();
+
+					if (wd().isElementPresent(elements().blockDetailedIssues(p_member)))
+					{
+						for (int i = 0; i < issues.size(); i++)
+						{
+							String date = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedDate(), true).getText();
+							String activity = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedActivityName(), true).getText();
+							String issue = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedIssueName(), true).getText();
+							String comment = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedComment(), true).getText();
+							Double hours = Double.parseDouble(wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText());
+
+							reportsTmp.put(i, new Object[] { date, activity, issue, comment, hours });
+							break;
+						}
+					}
+					else
+					{
+						break;
+					}
+
+				}
+			}
+
+			pageNumber++;
+		}
+
+		return reportsTmp;
 	}
 
 	public Map<Integer, Object[]> getTesting(Map<Integer, Object[]> reportsTmp, String p_member)
@@ -105,7 +155,11 @@ public class ReportsPage extends PageBase
 
 		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
 		{
-			if (entry.getValue()[0].toString().equals("Testing") || entry.getValue()[0].toString().equals("Development"))
+			if (entry.getValue()[0].toString().equals("Testing")
+					|| entry.getValue()[0].toString().equals("Development")
+					|| entry.getValue()[0].toString().equals("Maintenance")
+					|| entry.getValue()[0].toString().equals("Consultation")
+					|| entry.getValue()[0].toString().equals("act"))
 			{
 				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "" });
 			}
@@ -123,13 +177,94 @@ public class ReportsPage extends PageBase
 
 		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
 		{
-			if (entry.getValue()[0].toString().contains("Overtime"))
+			if (entry.getValue()[0].toString().contains("Overtime x1"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "x1" });
+			}
+			else if (entry.getValue()[0].toString().contains("Overtime x2"))
 			{
 				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "x2" });
+			}
+			else if (entry.getValue()[0].toString().contains("Overtime x3"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "x3" });
 			}
 		}
 
 		return reports;
 
+	}
+
+	public Map<Integer, Object[]> getTestingDetailed(Map<Integer, Object[]> reportsTmp, String p_member)
+	{
+		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
+
+		int i = 0;
+
+		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
+		{
+			if (entry.getValue()[1].toString().equals("Testing")
+					|| entry.getValue()[1].toString().equals("Development")
+					|| entry.getValue()[1].toString().equals("Maintenance")
+					|| entry.getValue()[1].toString().equals("Consultation")
+					|| entry.getValue()[1].toString().equals("act"))
+			{
+
+				String issueName = "[" + entry.getValue()[0] + "] " + entry.getValue()[2];
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "" });
+			}
+		}
+
+		return reports;
+
+	}
+
+	public Map<Integer, Object[]> getOvertimesDetailed(Map<Integer, Object[]> reportsTmp, String p_member)
+	{
+		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
+
+		int i = 0;
+
+		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
+		{
+			String issueName = "[" + entry.getValue()[0] + "] " + entry.getValue()[2];
+
+			if (entry.getValue()[1].toString().contains("Overtime x1"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "x1" });
+			}
+			else if (entry.getValue()[1].toString().contains("Overtime x2"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "x2" });
+			}
+			else if (entry.getValue()[1].toString().contains("Overtime x3"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "x3" });
+			}
+		}
+
+		return reports;
+
+	}
+
+	public void openNextPage()
+	{
+		if (wd().isElementPresent(elements().blockNextPage))
+		{
+			log().info("Open next page");
+			wd().click(elements().blockNextPage);
+		}
+	}
+
+	public int getNumbersOfPages()
+	{
+		if (wd().isElementPresent(elements().blockLastPage))
+		{
+			return Integer.parseInt(wd().getText(elements().blockLastPage));
+		}
+		else
+		{
+			return 1;
+		}
 	}
 }

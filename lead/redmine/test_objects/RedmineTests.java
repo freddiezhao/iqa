@@ -1,6 +1,5 @@
 package lead.redmine.test_objects;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import lead.core.base.extensions.TestBaseExt;
@@ -17,17 +16,34 @@ public class RedmineTests extends TestBaseExt
 	/**
 	 * Report test
 	 */
-	public void reportTestPH(String p_projectName, String p_period, String p_memberName)
+	public void reportDetailedTestPH(String p_projectName,
+			String p_period,
+			String p_memberShortName,
+			String p_memberFullName,
+			String p_memberLevel,
+			String p_memberRate,
+			String p_hoursInMonth)
 	{
+		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
+
 		try
 		{
-			redmine().indexPage().login();
-			redmine().homePage().openReportsPage("dating-2", "last_month", true, true, true);
-			redmine().reportsPage().getIssues("Golovko");
+			redmine().homePage().openReportsDetailed(p_projectName, p_period);
+
+			excel().create(fileName);
+
+			// Issues
+			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssuesDetailed(p_memberShortName);
+			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTestingDetailed(allIssues, p_memberShortName);
+			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimesDetailed(allIssues, p_memberShortName);
+
+			excel().writeHead(fileName, p_memberFullName, p_memberLevel, p_memberRate);
+			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
+
 		}
 		catch (Exception p_ex)
 		{
-			log().errorAndScreen(p_ex.toString());
+			log().errorAndScreen("Cannot generate report\n" + p_ex.toString());
 		}
 
 		test().forErrors();
@@ -36,46 +52,103 @@ public class RedmineTests extends TestBaseExt
 	/**
 	 * Report test
 	 */
-	public void reportTestTN(String p_projectName, String p_period, String p_memberName)
+	public void reportDetailedTestTN(String p_projectName,
+			String p_period,
+			String p_memberShortName,
+			String p_memberFullName,
+			String p_memberLevel,
+			String p_memberRate,
+			String p_hoursInMonth)
 	{
-
-		String fileName = "d:\\projects\\iqa\\" + p_memberName + ".xls";
+		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
 
 		try
 		{
-			redmine().indexPage().login();
-			redmine().homePage().openReportsPage(p_projectName, p_period, true, true, true);
+			redmine().homePage().openReportsDetailed(p_projectName, p_period);
 
 			excel().create(fileName);
 
 			// Issues
-			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberName);
-			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTesting(allIssues, p_memberName);
-			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberName);
-			// Formuals
-			Map<Integer, String[]> formulas = new HashMap<Integer, String[]>();
-			// Heads
-			Map<Integer, Object[]> head = new HashMap<Integer, Object[]>();
-			// Format
-			String[] formatHead = new String[] { "bold", "gray" };
-			String[] formatIssue = new String[] { "default", "default" };
+			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssuesDetailed(p_memberShortName);
+			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTestingDetailed(allIssues, p_memberShortName);
+			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimesDetailed(allIssues, p_memberShortName);
 
-			// Write head
-			head.put(0, new Object[] { "", "Issue", "Time", "Rate" });
-			excel().write(fileName, head, formatHead, true);
-			// Write testing
-			excel().write(fileName, testingIssues, formatIssue, false);
-			formulas.put(0, new String[] { "", "", "SUM(C2:C" + (testingIssues.size() + 1) + ")", "" });
-			excel().addFormula(fileName, formulas, false);
+			excel().writeHead(fileName, p_memberFullName, p_memberLevel, p_memberRate);
+			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
 
-			// Write head Overtimes
-			head.put(0, new Object[] { "", "Overtime", "Time", "Rate" });
-			excel().write(fileName, head, formatHead, false);
+		}
+		catch (Exception p_ex)
+		{
+			log().errorAndScreen("Cannot generate report\n" + p_ex.toString());
+		}
 
-			// Write Overtimes
-			excel().write(fileName, overtimeIssues, formatIssue, false);
-			formulas.put(0, new String[] { "", "", "SUM(C" + (testingIssues.size() + 4) + ":C" + (overtimeIssues.size() + testingIssues.size() + 3) + ")", "" });
-			excel().addFormula(fileName, formulas, false);
+		test().forErrors();
+	}
+
+	/**
+	 * Report test
+	 */
+	public void reportTestPH(String p_projectName,
+			String p_period,
+			String p_memberShortName,
+			String p_memberFullName,
+			String p_memberLevel,
+			String p_memberRate,
+			String p_hoursInMonth)
+	{
+		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
+
+		try
+		{
+			redmine().homePage().openReports(p_projectName, p_period);
+
+			excel().create(fileName);
+
+			// Issues
+			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberShortName);
+			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTesting(allIssues, p_memberShortName);
+			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberShortName);
+
+			excel().writeHead(fileName, p_memberFullName, p_memberLevel, p_memberRate);
+			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
+
+		}
+		catch (Exception p_ex)
+		{
+			log().errorAndScreen("Cannot generate report\n" + p_ex.toString());
+		}
+
+		test().forErrors();
+	}
+
+	/**
+	 * Report test
+	 */
+	public void reportTestTN(String p_projectName,
+			String p_period,
+			String p_memberShortName,
+			String p_memberFullName,
+			String p_memberLevel,
+			String p_memberRate,
+			String p_hoursInMonth)
+	{
+
+		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
+
+		try
+		{
+			redmine().homePage().openReports(p_projectName, p_period);
+
+			excel().create(fileName);
+
+			// Issues
+			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberShortName);
+			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTesting(allIssues, p_memberShortName);
+			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberShortName);
+
+			excel().writeHead(fileName, p_memberFullName, p_memberLevel, p_memberRate);
+			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
+
 		}
 		catch (Exception p_ex)
 		{
@@ -85,27 +158,8 @@ public class RedmineTests extends TestBaseExt
 		test().forErrors();
 	}
 
-	/**
-	 * Excel test
-	 */
-	public void excelTest()
+	public void login()
 	{
-		try
-		{
-			Map<Integer, Object[]> data = new HashMap<Integer, Object[]>();
-			data.put(1, new Object[] { "Emp No.", "Name", "Salary" });
-			data.put(2, new Object[] { 1d, "John", 1500000d });
-			data.put(3, new Object[] { 2d, "Sam", 800000d });
-			data.put(4, new Object[] { 3d, "Dean", 700000d });
-
-			// manager.excel().create("d:\\projects\\iqa\\new.xls", data);
-			// manager.excel().read("d:\\projects\\iqa\\new.xls");
-		}
-		catch (Exception p_ex)
-		{
-			log().errorAndScreen(p_ex.toString());
-		}
-
-		test().forErrors();
+		redmine().indexPage().login();
 	}
 }

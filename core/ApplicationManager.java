@@ -153,7 +153,7 @@ public class ApplicationManager
 	 * @return true - successful initialization, false - failed initialization
 	 */
 	public boolean init(String p_project, String p_server, String p_os, String p_platform, String p_site, String p_build, String p_location, String p_proxy,
-			String p_browserName, String p_browserVersion, String p_saucelabsUser, String p_saucelabsKey)
+			String p_browserName, String p_browserVersion, String p_saucelabsUser, String p_saucelabsKey, String p_siteURL)
 	{
 		testModel()
 				.setProjectName(p_project)
@@ -168,7 +168,7 @@ public class ApplicationManager
 				.setBrowserVersion(p_browserVersion)
 				.setSaucelabsUsername(p_saucelabsUser)
 				.setSaucelabsKey(p_saucelabsKey)
-				.setSiteURL();
+				.setSiteURL(p_siteURL);
 
 		testModel().print();
 
