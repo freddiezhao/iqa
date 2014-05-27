@@ -97,12 +97,12 @@ public abstract class TestSuiteBase extends TestBase
 
 		try
 		{
-			phoenix().db().connect(
-					phoenix().config().DB_HOST,
-					phoenix().config().DB_PORT,
-					phoenix().config().DB_NAME,
-					phoenix().config().DB_USER,
-					phoenix().config().DB_PASSWORD);
+			lead().db().connect(
+					lead().config().DB_HOST,
+					lead().config().DB_PORT,
+					lead().config().DB_NAME,
+					lead().config().DB_USER,
+					lead().config().DB_PASSWORD);
 
 			db().isConnected();
 		}
@@ -114,7 +114,7 @@ public abstract class TestSuiteBase extends TestBase
 		// Check Phoenix initializtion
 		try
 		{
-			phoenix().initPhoenix(p_project, p_server, p_os, p_platform, p_site, p_build, p_location, p_proxy, p_browserName, p_browserVersion,
+			lead().initPhoenix(p_project, p_server, p_os, p_platform, p_site, p_build, p_location, p_proxy, p_browserName, p_browserVersion,
 					p_saucelabsUser, p_saucelabsKey, p_site);
 		}
 		catch (Exception p_ex)
@@ -122,7 +122,7 @@ public abstract class TestSuiteBase extends TestBase
 			Assert.assertTrue(false, log().getErrorsAndWarnings());
 		}
 
-		phoenix().webDriver().openURL(testModel().getSiteURL());
+		lead().webDriver().openURL(testModel().getSiteURL());
 	}
 
 	/**
@@ -204,7 +204,7 @@ public abstract class TestSuiteBase extends TestBase
 	 */
 	public DBHelperExt db()
 	{
-		return phoenix().db();
+		return lead().db();
 	}
 
 	/**

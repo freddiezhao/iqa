@@ -22,7 +22,7 @@ public class TestBaseExt extends TestBase
 	 */
 	protected PageRedmineHelper redmine()
 	{
-		return phoenix().redmine();
+		return lead().redmine();
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class TestBaseExt extends TestBase
 	@Override
 	public TestDataModel testModel()
 	{
-		return phoenix().testModel();
+		return lead().testModel();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class TestBaseExt extends TestBase
 	 */
 	public TestUserDataModel testUser()
 	{
-		return phoenix().testUser();
+		return lead().testUser();
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class TestBaseExt extends TestBase
 	 */
 	public DBHelperExt db()
 	{
-		return phoenix().db();
+		return lead().db();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TestBaseExt extends TestBase
 	@Override
 	public RandomizerHelperExt randomizer()
 	{
-		return phoenix().randomizer();
+		return lead().randomizer();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class TestBaseExt extends TestBase
 	@Override
 	public ConfigExt config()
 	{
-		return phoenix().config();
+		return lead().config();
 	}
 
 	/**

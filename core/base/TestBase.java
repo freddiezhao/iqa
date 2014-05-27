@@ -7,6 +7,7 @@ import lead.core.LeadManager;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import taobao.core.TaobaoManager;
 import core.ApplicationManager;
 import core.config.Config;
 import core.data_models.TestDataModel;
@@ -50,9 +51,19 @@ public abstract class TestBase
 	 * 
 	 * @return PhoenixManager instance
 	 */
-	public LeadManager phoenix()
+	public LeadManager lead()
 	{
 		return manager.lead();
+	}
+
+	/**
+	 * Link method to PhoenixManager
+	 * 
+	 * @return PhoenixManager instance
+	 */
+	public TaobaoManager taobao()
+	{
+		return manager.taobao();
 	}
 
 	/**

@@ -31,6 +31,7 @@ public class Config
 
 	// Projects
 	public String PROJECT_LEAD = "lead";
+	public String PROJECT_TAOBAO = "taobao";
 
 	// Browsers
 	public final String BROWSER_FIREFOX = "firefox";

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="redmine" parallel="none">  
+    
+    <parameter name="project" value="lead"/> 
+  	<parameter name="server" value="local"/>   
+  	<parameter name="os" value="win7"/> 
+  	<parameter name="platform" value="web"/> 
+  	<!-- <parameter name="site" value="redmine.platformphoenix.com"/>-->
+  	<parameter name="site" value="redmine.togethernetworks.com"/>
+  	
+  	<parameter name="build" value="live"/>
+  	<parameter name="location" value="gbr"/>
+  	<parameter name="proxy" value="def"/>
+  	<parameter name="browserName" value="chrome"/>
+  	<parameter name="browserVersion" value="def"/>
+  	<parameter name="saucelabsUser" value="def"/>
+    <parameter name="saucelabsKey" value="def"/>
+    	
+  	<test name="redmine"> 
+  		<classes>
+    		<class name="lead.redmine.test_suites.RedmineReportTS"></class>
+  		</classes>
+  	</test>	
+</suite>

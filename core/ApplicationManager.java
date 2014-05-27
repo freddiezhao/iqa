@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import lead.core.LeadManager;
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+import taobao.core.TaobaoManager;
 import core.base.ProjectBase;
 import core.config.Config;
 import core.data_models.TestDataModel;
@@ -79,8 +80,8 @@ public class ApplicationManager
 	public static List<JavaScriptError> jsErrors;
 
 	// Projects
-	// Phoenix
 	private LeadManager lead;
+	private TaobaoManager taobao;
 
 	/**
 	 * Initializes ApplicationManager
@@ -97,6 +98,10 @@ public class ApplicationManager
 	public ProjectBase project()
 	{
 		if (testModel().getProjectName().equals(config().PROJECT_LEAD))
+		{
+			return lead();
+		}
+		else if (testModel().getProjectName().equals(config().PROJECT_TAOBAO))
 		{
 			return lead();
 		}
@@ -121,6 +126,21 @@ public class ApplicationManager
 		}
 
 		return lead;
+	}
+
+	/**
+	 * Taobao manager
+	 * 
+	 * @return LeadManager instance
+	 */
+	public TaobaoManager taobao()
+	{
+		if (taobao == null)
+		{
+			taobao = new TaobaoManager(this);
+		}
+
+		return taobao;
 	}
 
 	/**
