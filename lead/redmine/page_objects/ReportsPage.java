@@ -147,7 +147,7 @@ public class ReportsPage extends PageBase
 		return reportsTmp;
 	}
 
-	public Map<Integer, Object[]> getTesting(Map<Integer, Object[]> reportsTmp, String p_member)
+	public Map<Integer, Object[]> getDefaultIssues(Map<Integer, Object[]> reportsTmp, String p_member)
 	{
 		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
 
