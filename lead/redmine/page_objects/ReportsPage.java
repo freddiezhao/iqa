@@ -90,16 +90,28 @@ public class ReportsPage extends PageBase
 
 		int pageNumber = 1;
 		int pagesCount = getNumbersOfPages();
+		int line = 0;
+		List<WebElement> issues = null;
+		boolean isIssuesFound = false;
 
 		while (pageNumber <= pagesCount)
 		{
+
 			if (!wd().isElementPresent(elements().blockDetailedIssues(p_member)))
 			{
-				openNextPage();
+				if (isIssuesFound)
+				{
+					break;
+				}
+				else
+				{
+					openNextPage();
+					pageNumber++;
+				}
 			}
 			else
 			{
-				List<WebElement> issues = wd().getWebElements(elements().blockDetailedIssues(p_member), true);
+				issues = wd().getWebElements(elements().blockDetailedIssues(p_member), true);
 
 				log().info("Issues Total: " + issues.size());
 
@@ -111,37 +123,24 @@ public class ReportsPage extends PageBase
 					String comment = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedComment(), true).getText();
 					Double hours = Double.parseDouble(wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText());
 
-					reportsTmp.put(i, new Object[] { date, activity, issue, comment, hours });
+					reportsTmp.put(line, new Object[] { date, activity, issue, comment, hours });
+					line++;
 				}
 
-				// Check on next page
-				if (pageNumber > 1 && pageNumber < pagesCount)
+				isIssuesFound = true;
+				issues.clear();
+
+				if (pageNumber < pagesCount)
 				{
 					openNextPage();
-
-					if (wd().isElementPresent(elements().blockDetailedIssues(p_member)))
-					{
-						for (int i = 0; i < issues.size(); i++)
-						{
-							String date = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedDate(), true).getText();
-							String activity = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedActivityName(), true).getText();
-							String issue = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedIssueName(), true).getText();
-							String comment = wd().getWebElementFromWebElement(issues.get(i), elements().blockDetailedComment(), true).getText();
-							Double hours = Double.parseDouble(wd().getWebElementFromWebElement(issues.get(i), elements().blockIssueHours(), true).getText());
-
-							reportsTmp.put(i, new Object[] { date, activity, issue, comment, hours });
-							break;
-						}
-					}
-					else
-					{
-						break;
-					}
-
+					pageNumber++;
+				}
+				else
+				{
+					break;
 				}
 			}
 
-			pageNumber++;
 		}
 
 		return reportsTmp;
@@ -249,22 +248,49 @@ public class ReportsPage extends PageBase
 
 	public void openNextPage()
 	{
-		if (wd().isElementPresent(elements().blockNextPage))
+		if (lead().isRedminePhoenix())
 		{
-			log().info("Open next page");
-			wd().click(elements().blockNextPage);
+			if (wd().isElementPresent(elements().blockNextPagePhoenix))
+			{
+				log().info("Open next page");
+				wd().click(elements().blockNextPagePhoenix);
+			}
+		}
+		else if (lead().isRedmineTNetworks())
+		{
+			if (wd().isElementPresent(elements().blockNextPageTNetworks))
+			{
+				log().info("Open next page");
+				wd().click(elements().blockNextPageTNetworks);
+			}
 		}
 	}
 
 	public int getNumbersOfPages()
 	{
-		if (wd().isElementPresent(elements().blockLastPage))
+		if (lead().isRedminePhoenix())
 		{
-			return Integer.parseInt(wd().getText(elements().blockLastPage));
+			if (wd().isElementPresent(elements().blockLastPagePhoenix))
+			{
+				return Integer.parseInt(wd().getText(elements().blockLastPagePhoenix));
+			}
+			else
+			{
+				return 1;
+			}
 		}
-		else
+		else if (lead().isRedmineTNetworks())
 		{
-			return 1;
+			if (wd().isElementPresent(elements().blockLastPageTNetworks))
+			{
+				return Integer.parseInt(wd().getText(elements().blockLastPageTNetworks));
+			}
+			else
+			{
+				return 1;
+			}
 		}
+
+		return 1;
 	}
 }

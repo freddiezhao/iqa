@@ -20,6 +20,7 @@ import core.helpers.HarHelper;
 import core.helpers.HttpHelper;
 import core.helpers.JavaScriptHelper;
 import core.helpers.LoggerHelper;
+import core.helpers.MailHelper;
 import core.helpers.PropertyLoaderHelper;
 import core.helpers.RandomizerHelper;
 import core.helpers.RedmineHelper;
@@ -70,6 +71,7 @@ public class ApplicationManager
 	private RobotHelper robot;
 	private ThreadHelper thread;
 	private ExcelHelper excel;
+	private MailHelper mail;
 
 	// Data Models
 	private static TestDataModel testModel;
@@ -344,6 +346,21 @@ public class ApplicationManager
 		}
 
 		return harHelper;
+	}
+
+	/**
+	 * Provides the methods for working with email
+	 * 
+	 * @return Reference to MailHelper
+	 */
+	public MailHelper mail()
+	{
+		if (mail == null)
+		{
+			mail = new MailHelper(this);
+		}
+
+		return mail;
 	}
 
 	/**

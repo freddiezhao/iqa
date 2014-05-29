@@ -64,7 +64,7 @@ public class ExcelHelperExt extends ExcelHelper
 		// Write testing
 		write(p_fileName, p_testingIssues, "def", "0", "def", "def", true, false);
 
-		formulas.put(0, new String[] { "", "", "SUM(C6:C" + (p_testingIssues.size() + 5) + ")", "" });
+		formulas.put(0, new String[] { "", "", "SUM(C10:C" + (p_testingIssues.size() + 9) + ")", "" });
 		addFormula(p_fileName, formulas, false);
 
 		writeHeadOvertime(p_fileName);
@@ -74,7 +74,7 @@ public class ExcelHelperExt extends ExcelHelper
 			// Write Overtimes
 			write(p_fileName, p_overtimeIssues, "def", "0", "def", "def", true, false);
 			formulas.put(0,
-					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 8) + ":C" + (p_overtimeIssues.size() + p_testingIssues.size() + 7) + ")", "" });
+					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 12) + ":C" + (p_overtimeIssues.size() + p_testingIssues.size() + 11) + ")", "" });
 			addFormula(p_fileName, formulas, false);
 		}
 		else
@@ -83,7 +83,7 @@ public class ExcelHelperExt extends ExcelHelper
 			// Write Overtimes
 			write(p_fileName, issues, "def", "0", "def", "def", true, false);
 			formulas.put(0,
-					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 8) + ":C" + (p_testingIssues.size() + 8) + ")", "" });
+					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 11) + ":C" + (p_testingIssues.size() + 11) + ")", "" });
 			addFormula(p_fileName, formulas, false);
 		}
 

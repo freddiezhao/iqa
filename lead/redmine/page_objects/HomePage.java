@@ -59,7 +59,7 @@ public class HomePage extends PageBase
 		{
 			url += "/projects/"
 					+ p_project
-					+ "/time_entries/report?utf8=%E2%9C%93&f[]=spent_on&op[spent_on]=lm&f[]=&columns=month" + "&period=" + p_period
+					+ "/time_entries/report?utf8=%E2%9C%93&f[]=spent_on&op[spent_on]=" + p_period + "&f[]=&columns=month"
 					+ "&criteria[]=user" + "&criteria[]=activity" + "&criteria[]=issue";
 		}
 

@@ -16,30 +16,34 @@ public class RedmineTests extends TestBaseExt
 	/**
 	 * Report test
 	 */
-	public void reportDetailedTestPH(String p_projectName,
+	public void reportManualPhoenixTest(String p_projectName,
 			String p_period,
 			String p_memberShortName,
 			String p_memberFullName,
 			String p_memberPosition,
 			String p_memberLevel,
 			String p_memberRate,
-			String p_hoursInMonth)
+			String p_hoursInMonth,
+			String p_email)
 	{
-		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
+		String fileName = cronos().getCurrentDate("yyyy-MM-") + p_memberShortName + ".xls";
+		String filePath = "d:\\projects\\iqa\\manual\\" + fileName;
 
 		try
 		{
 			redmine().homePage().openReportsDetailed(p_projectName, p_period);
 
-			excel().create(fileName);
+			excel().create(filePath);
 
 			// Issues
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssuesDetailed(p_memberShortName);
 			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTestingDetailed(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimesDetailed(allIssues, p_memberShortName);
 
-			excel().writeHead(fileName, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
+			excel().writeIssues(filePath, testingIssues, overtimeIssues, p_hoursInMonth);
+
+			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
 		}
 		catch (Exception p_ex)
@@ -53,30 +57,35 @@ public class RedmineTests extends TestBaseExt
 	/**
 	 * Report test
 	 */
-	public void reportDetailedTestTN(String p_projectName,
+	public void reportManualTNetworksTest(String p_projectName,
 			String p_period,
 			String p_memberShortName,
 			String p_memberFullName,
 			String p_memberPosition,
 			String p_memberLevel,
 			String p_memberRate,
-			String p_hoursInMonth)
+			String p_hoursInMonth,
+			String p_email)
 	{
-		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
+
+		String fileName = cronos().getCurrentDate("yyyy-MM-") + p_memberShortName + ".xls";
+		String filePath = "d:\\projects\\iqa\\manual\\" + fileName;
 
 		try
 		{
 			redmine().homePage().openReportsDetailed(p_projectName, p_period);
 
-			excel().create(fileName);
+			excel().create(filePath);
 
 			// Issues
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssuesDetailed(p_memberShortName);
 			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTestingDetailed(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimesDetailed(allIssues, p_memberShortName);
 
-			excel().writeHead(fileName, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
+			excel().writeIssues(filePath, testingIssues, overtimeIssues, p_hoursInMonth);
+
+			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
 		}
 		catch (Exception p_ex)
@@ -90,30 +99,34 @@ public class RedmineTests extends TestBaseExt
 	/**
 	 * Report test
 	 */
-	public void reportTestPH(String p_projectName,
+	public void reportAutoPhoenixTest(String p_projectName,
 			String p_period,
 			String p_memberShortName,
 			String p_memberFullName,
 			String p_memberPosition,
 			String p_memberLevel,
 			String p_memberRate,
-			String p_hoursInMonth)
+			String p_hoursInMonth,
+			String p_email)
 	{
-		String fileName = "d:\\projects\\iqa\\" + cronos().getCurrentDate("yyyy-MM-") + p_memberShortName + ".xls";
+		String fileName = cronos().getCurrentDate("yyyy-MM-") + p_memberShortName + ".xls";
+		String filePath = "d:\\projects\\iqa\\auto\\" + fileName;
 
 		try
 		{
 			redmine().homePage().openReports(p_projectName, p_period);
 
-			excel().create(fileName);
+			excel().create(filePath);
 
 			// Issues
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberShortName);
 			Map<Integer, Object[]> defaultIssues = redmine().reportsPage().getDefaultIssues(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberShortName);
 
-			excel().writeHead(fileName, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(fileName, defaultIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
+			excel().writeIssues(filePath, defaultIssues, overtimeIssues, p_hoursInMonth);
+
+			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
 		}
 		catch (Exception p_ex)
@@ -127,31 +140,34 @@ public class RedmineTests extends TestBaseExt
 	/**
 	 * Report test
 	 */
-	public void reportTestTN(String p_projectName,
+	public void reportAutoTNetworksTest(String p_projectName,
 			String p_period,
 			String p_memberShortName,
 			String p_memberFullName,
 			String p_memberPosition,
 			String p_memberLevel,
 			String p_memberRate,
-			String p_hoursInMonth)
+			String p_hoursInMonth,
+			String p_email)
 	{
-
-		String fileName = "d:\\projects\\iqa\\" + p_memberShortName + ".xls";
+		String fileName = cronos().getCurrentDate("yyyy-MM-") + p_memberShortName + ".xls";
+		String filePath = "d:\\projects\\iqa\\auto\\" + fileName;
 
 		try
 		{
 			redmine().homePage().openReports(p_projectName, p_period);
 
-			excel().create(fileName);
+			excel().create(filePath);
 
 			// Issues
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberShortName);
 			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getDefaultIssues(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberShortName);
 
-			excel().writeHead(fileName, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(fileName, testingIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
+			excel().writeIssues(filePath, testingIssues, overtimeIssues, p_hoursInMonth);
+
+			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
 		}
 		catch (Exception p_ex)
@@ -165,5 +181,18 @@ public class RedmineTests extends TestBaseExt
 	public void login()
 	{
 		redmine().indexPage().login();
+	}
+
+	private void sendToEmail(String p_memberPosition, String p_email, String fileName, String filePath)
+	{
+		manager.mail().send("mail.together.com",
+				"igor.babar",
+				"Justsay_1",
+				p_email,
+				"igor.babar@together.com",
+				"[Monthly report][" + p_memberPosition + "][" + fileName + "]",
+				"text",
+				fileName,
+				filePath);
 	}
 }

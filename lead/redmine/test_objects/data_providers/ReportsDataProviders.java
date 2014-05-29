@@ -60,9 +60,9 @@ public class ReportsDataProviders extends TestBaseExt
 	String salaryAutoSeniorDp10 = "1950";
 	String salaryAutoSeniorDp11 = "2075";
 
-	String hours = "168";
+	String hours = "160";
 
-	public Object[][] reportsAutoData()
+	public Object[][] reportsAutoPhoenixData()
 	{
 		String project = "dating-2";
 		String period = "current_month";
@@ -70,64 +70,85 @@ public class ReportsDataProviders extends TestBaseExt
 		return new Object[][]
 		{
 				// ZP
-				// { project, period, "Gatsenko", "Gatsenko Denis", "QA Automation Engineer", "Junior",
-				// salaryAutoJuniorZp3, hours },
-				{ project, period, "Koloskov", "Koloskov Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5, hours },
-		// { project, period, "Savin", "Savin Vitaliy", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6, hours
-		// },
-		// { project, period, "Golovko", "Golovko Alexander", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6,
-		// hours },
-		// DP
-		// { project, period, "Nagibin", "Nagibin Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5,
-		// hours }
+				{ project, period, "Gatsenko", "Gatsenko Denis", "QA Automation Engineer", "Junior", salaryAutoJuniorZp3, hours,
+						"denys.gacenko@together.com" },
+				{ project, period, "Koloskov", "Koloskov Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5, hours,
+						"andrey.koloskov@together.com" },
+				// { project, period, "Savin", "Savin Vitaliy", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6,
+				// hours, "vitaliy.savin@together.com"
+				// },
+				{ project, period, "Golovko", "Golovko Alexander", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6, hours,
+						"alexander.golovko@together.com" },
+				// DP
+				{ project, period, "Nagibin", "Nagibin Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5, hours,
+						"andrey.nagibin@together.com" }
 		};
 	}
 
 	public Object[][] reportsManualPhoenixData()
 	{
 		String project = "dating-2";
+		String period = "current_month";
+
+		return new Object[][]
+		{
+				// ZP
+				{ project, period, "Vasilevskaya", "Vasilevskaya Julia", "QA Engineer", "Junior", salaryManualJuniorZp1, hours,
+						"julia.vasilevskaya@together.com" },
+				{ project, period, "Lukashova", "Lukashova Elena", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"elena.lukashova@together.com" },
+				// DP
+				{ project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "QA Engineer", "Middle", salaryManualMiddleDp5, hours,
+						"artem.zaporozhskiy@together.com" },
+		};
+	}
+
+	public Object[][] reportsAutoTNetworksData()
+	{
+		String project = "general-porduct";
 		String period = "m";
 
 		return new Object[][]
 		{
 				// ZP
-				{ project, period, "Vasilevskaya", "Vasilevskaya Julia", "QA Engineer", "Junior", salaryManualJuniorZp1, hours },
-				{ project, period, "Chudlya", "Chudlya Artur", "QA Engineer", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Lyapkin", "Lyapkin Vadim", "QA Engineer", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Kovalenko", "Kovalenko Maxim", "QA Engineer", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Zemlyanskiy", "Zemlyanskiy Alexander", "QA Engineer", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Romanichenko", "Romanichenko Anton", "QA Engineer", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Lukashova", "Lukashova Elena", "QA Engineer", "Middle", salaryManualMiddleZp5, hours },
-				// DP
-				{ project, period, "Khurtak", "Khurtak Alena", "QA Engineer", "Junior", salaryManualJuniorDp2, hours },
-				{ project, period, "Penner", "Penner Olga", "QA Engineer", "Junior", salaryManualJuniorDp2, hours },
-				{ project, period, "Zaporozhskaya", "Zaporozhskaya Julia", "QA Engineer", "Junior", salaryManualJuniorDp2, hours },
-				{ project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "QA Engineer", "Middle", salaryManualMiddleDp5, hours },
-				{ project, period, "Gorkun", "Gorkun Roman", "QA Engineer", "Junior", salaryManualMiddleDp5, hours },
+				{ project, period, "Savin", "Savin Vitaliy", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6, hours,
+						"vitaliy.savin@together.com" },
 		};
 	}
 
 	public Object[][] reportsManualTNetworksData()
 	{
 		String project = "general-porduct";
-		String period = "lm";
+		String period = "m";
 
 		return new Object[][]
 		{
 				// ZP
-				{ project, period, "Vasilevskaya", "Vasilevskaya Julia", "Junior", salaryManualJuniorZp1, hours },
-				{ project, period, "Chudlya", "Chudlya Artur", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Lyapkin", "Lyapkin Vadim", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Kovalenko", "Kovalenko Maxim", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Zemlyanskiy", "Zemlyanskiy Alexander", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Romanichenko", "Romanichenko Anton", "Middle", salaryManualMiddleZp5, hours },
-				{ project, period, "Lukashova", "Lukashova Elena", "Middle", salaryManualMiddleZp5, hours },
+				{ project, period, "Koloskov", "Koloskov Andrey", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"andrey.koloskov@together.com" },
+				{ project, period, "Lukashova", "Lukashova Elena", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"elena.lukashova@together.com" },
+				{ project, period, "Chudlya", "Chudlya Artur", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"artur.chudlya@together.com" },
+				{ project, period, "Lyapkin", "Lyapkin Vadim", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"vadim.lyapkin@together.com" },
+				{ project, period, "Kovalenko", "Kovalenko Maxim", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"maxim.kovalenko@together.com" },
+				{ project, period, "Zemlyanskiy", "Zemlyanskiy Alexander", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"alexander.zemlyanskiy@together.com" },
+				{ project, period, "Romanichenko", "Romanichenko Anton", "QA Engineer", "Middle", salaryManualMiddleZp5, hours,
+						"anton.romanichenko@together.com" },
 				// DP
-				{ project, period, "Khurtak", "Khurtak Alena", "Junior", salaryManualJuniorDp2, hours },
-				{ project, period, "Penner", "Penner Olga", "Junior", salaryManualJuniorDp2, hours },
-				{ project, period, "Zaporozhskaya", "Zaporozhskaya Julia", "Junior", salaryManualJuniorDp2, hours },
-				{ project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "Middle", salaryManualMiddleDp5, hours },
-				{ project, period, "Gorkun", "Gorkun Roman", "Junior", salaryManualMiddleDp5, hours },
+				{ project, period, "Khurtak", "Khurtak Alena", "QA Engineer", "Junior", salaryManualJuniorDp2, hours,
+						"alena.khurtak@together.com" },
+				{ project, period, "Penner", "Penner Olga", "QA Engineer", "Junior", salaryManualJuniorDp2, hours,
+						"olga.penner@together.com" },
+				{ project, period, "Zaporozhskaya", "Zaporozhskaya Julia", "QA Engineer", "Junior", salaryManualJuniorDp2, hours,
+						"julia.zaporozhskaya@together.com" },
+				{ project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "QA Engineer", "Middle", salaryManualMiddleDp5, hours,
+						"artem.zaporozhskiy@together.com" },
+				{ project, period, "Gorkun", "Gorkun Roman", "QA Engineer", "Junior", salaryManualMiddleDp5, hours,
+						"roman.gorkun@together.com" },
 		};
 	}
 }

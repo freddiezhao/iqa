@@ -14,8 +14,12 @@ public class ReportsPageLocators
 	public By selectCriterias = By.id("criterias");
 	public By blockTimeReport = By.id("time-report");
 	public By blockDetailedTimeReport = By.xpath("//*[contains(@class,'time-entries')]");
-	public By blockNextPage = By.xpath("//*[@class='pagination']/a[@class='next']");
-	public By blockLastPage = By.xpath("(//*[@class='pagination']/a[@class='page'])[last()]");
+
+	public By blockNextPageTNetworks = By.xpath("//*[@class='pagination']/a[@class='next']");
+	public By blockNextPagePhoenix = By.xpath("//*[@class='pagination']/a[contains(text(),'Next')]");
+
+	public By blockLastPageTNetworks = By.xpath("(//*[@class='pagination']/a[@class='page'])[last()]");
+	public By blockLastPagePhoenix = By.xpath("(//*[@class='pagination']/a[contains(text(),'Next')]/preceding-sibling::a)[last()]");
 
 	public By blockDetailedDate()
 	{
