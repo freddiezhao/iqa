@@ -50,7 +50,7 @@ public class RedmineReportPhoenixTS extends TestSuiteBase
 				p_hoursInMonth, p_email);
 	}
 
-	@Test(dataProvider = "reportsManualPhoenixData", enabled = true)
+	@Test(dataProvider = "reportsManualPhoenixData", enabled = false)
 	public void reportManualPhoenixTest(String p_projectName,
 			String p_period,
 			String p_memberShortName,

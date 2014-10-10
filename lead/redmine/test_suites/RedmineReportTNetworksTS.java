@@ -35,7 +35,7 @@ public class RedmineReportTNetworksTS extends TestSuiteBase
 		redmineTests.login();
 	}
 
-	@Test(dataProvider = "reportsAutoTNetworksData", enabled = false)
+	@Test(dataProvider = "reportsAutoTNetworksData", enabled = true)
 	public void reportAutoTNetworksTest(String p_projectName,
 			String p_period,
 			String p_memberShortName,
@@ -50,7 +50,7 @@ public class RedmineReportTNetworksTS extends TestSuiteBase
 				p_hoursInMonth, p_email);
 	}
 
-	@Test(dataProvider = "reportsManualTNetworksData", enabled = true)
+	@Test(dataProvider = "reportsManualTNetworksData", enabled = false)
 	public void reportManualTNetworksTest(String p_projectName,
 			String p_period, String p_memberShortName,
 			String p_memberFullName,

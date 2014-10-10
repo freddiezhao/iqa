@@ -65,23 +65,28 @@ public class ReportsDataProviders extends TestBaseExt
 	public Object[][] reportsAutoPhoenixData()
 	{
 		String project = "dating-2";
-		String period = "current_month";
+		// String period = "current_month";
+		String period = "last_month";
 
 		return new Object[][]
 		{
 				// ZP
-				{ project, period, "Gatsenko", "Gatsenko Denis", "QA Automation Engineer", "Junior", salaryAutoJuniorZp3, hours,
-						"denys.gacenko@together.com" },
-				{ project, period, "Koloskov", "Koloskov Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5, hours,
-						"andrey.koloskov@together.com" },
+				// { project, period, "Gatsenko", "Gatsenko Denis", "QA Automation Engineer", "Junior",
+				// salaryAutoJuniorZp3, hours,
+				// "denys.gacenko@together.com" },
+				// { project, period, "Koloskov", "Koloskov Andrey", "QA Automation Engineer", "Middle",
+				// salaryAutoMiddleZp5, hours,
+				// "andrey.koloskov@together.com" },
 				// { project, period, "Savin", "Savin Vitaliy", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6,
 				// hours, "vitaliy.savin@together.com"
 				// },
-				{ project, period, "Golovko", "Golovko Alexander", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6, hours,
+				{ project, period, "Golovko", "Golovko Alexander", "QA Automation Engineer", "Middle",
+						salaryAutoMiddleZp6, hours,
 						"alexander.golovko@together.com" },
-				// DP
-				{ project, period, "Nagibin", "Nagibin Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5, hours,
-						"andrey.nagibin@together.com" }
+		// DP
+		// { project, period, "Nagibin", "Nagibin Andrey", "QA Automation Engineer", "Middle", salaryAutoMiddleZp5,
+		// hours,
+		// "andrey.nagibin@together.com" }
 		};
 	}
 
@@ -105,14 +110,18 @@ public class ReportsDataProviders extends TestBaseExt
 
 	public Object[][] reportsAutoTNetworksData()
 	{
+		String projectTL = "testteamtl-issues";
 		String project = "general-porduct";
 		String period = "m";
 
 		return new Object[][]
 		{
 				// ZP
-				{ project, period, "Savin", "Savin Vitaliy", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6, hours,
-						"vitaliy.savin@together.com" },
+				// { project, period, "Savin", "Savin Vitaliy", "QA Automation Engineer", "Middle", salaryAutoMiddleZp6,
+				// hours,
+				// "vitaliy.savin@together.com" },
+				{ projectTL, period, "Babar", "Babar Igor", "Project manager Technical QA team", "Senior", salaryAutoSeniorZp9, hours,
+						"igor.babar@together.com" },
 		};
 	}
 
@@ -147,7 +156,7 @@ public class ReportsDataProviders extends TestBaseExt
 						"julia.zaporozhskaya@together.com" },
 				{ project, period, "Zaporozhskiy", "Zaporozhskiy Artem", "QA Engineer", "Middle", salaryManualMiddleDp5, hours,
 						"artem.zaporozhskiy@together.com" },
-				{ project, period, "Gorkun", "Gorkun Roman", "QA Engineer", "Junior", salaryManualMiddleDp5, hours,
+				{ project, period, "Gorkun", "Gorkun Roman", "QA Engineer", "Middle", salaryManualMiddleDp5, hours,
 						"roman.gorkun@together.com" },
 		};
 	}

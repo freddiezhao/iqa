@@ -194,6 +194,31 @@ public class ReportsPage extends PageBase
 
 	}
 
+	public Map<Integer, Object[]> getOthers(Map<Integer, Object[]> reportsTmp, String p_member)
+	{
+		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
+
+		int i = 0;
+
+		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
+		{
+			if (entry.getValue()[0].toString().contains("Vacation"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "" });
+			}
+			else if (entry.getValue()[0].toString().contains("Illness"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "" });
+			}
+			else if (entry.getValue()[0].toString().contains("Skip"))
+			{
+				reports.put(i++, new Object[] { entry.getValue()[0], entry.getValue()[1], entry.getValue()[2], "" });
+			}
+		}
+
+		return reports;
+	}
+
 	public Map<Integer, Object[]> getTestingDetailed(Map<Integer, Object[]> reportsTmp, String p_member)
 	{
 		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
@@ -239,6 +264,37 @@ public class ReportsPage extends PageBase
 			else if (entry.getValue()[1].toString().contains("Overtime x3"))
 			{
 				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "x3" });
+			}
+		}
+
+		return reports;
+
+	}
+
+	public Map<Integer, Object[]> getOthersDetailed(Map<Integer, Object[]> reportsTmp, String p_member)
+	{
+		Map<Integer, Object[]> reports = new HashMap<Integer, Object[]>();
+
+		int i = 0;
+
+		for (Map.Entry<Integer, Object[]> entry : reportsTmp.entrySet())
+		{
+			String issueName = "[" + entry.getValue()[0] + "] " + entry.getValue()[2];
+
+			if (entry.getValue()[1].toString().contains("Vacation"))
+			{
+				System.out.println(issueName);
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "" });
+			}
+			else if (entry.getValue()[1].toString().contains("Illness"))
+			{
+				System.out.println(issueName);
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "" });
+			}
+			else if (entry.getValue()[1].toString().contains("Skip"))
+			{
+				System.out.println(issueName);
+				reports.put(i++, new Object[] { entry.getValue()[1], issueName, entry.getValue()[4], "" });
 			}
 		}
 

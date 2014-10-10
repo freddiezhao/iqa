@@ -21,12 +21,12 @@ public class ExcelHelperExt extends ExcelHelper
 		// Write full name
 		head.put(0, new Object[] { "", p_memberPosition, "", "" });
 		head.put(1, new Object[] { "", p_memberFullName, "", "" });
-		write(p_fileName, head, "bold", "14", "blue", "def", false, true);
 		// Write level and salary
 		head.put(2, new Object[] { "", p_memberLevel, "", "" });
 		head.put(3, new Object[] { "", "Salary (USD)", p_memberSalary, "" });
 		write(p_fileName, head, "bold", "12", "blue", "def", false, true);
 
+		head.clear();
 		head.put(0, new Object[] { "", "", "", "" });
 		head.put(1, new Object[] { "", "Period:", cronos().getCurrentDate("MM.yyyy"), "" });
 		write(p_fileName, head, "bold", "12", "def", "def", false, false);
@@ -42,6 +42,16 @@ public class ExcelHelperExt extends ExcelHelper
 		write(p_fileName, head, "bold", "0", "def", "gray", true, false);
 	}
 
+	public void writeHeadOthers(String p_fileName)
+	{
+		// Head
+		Map<Integer, Object[]> head = new HashMap<Integer, Object[]>();
+
+		// Write head Overtimes
+		head.put(0, new Object[] { "", "Payed Vacations/ Unpayed Vacations/ illness", "Time", "Rate" });
+		write(p_fileName, head, "bold", "0", "def", "gray", true, false);
+	}
+
 	public void writeHeadIssues(String p_fileName)
 	{
 		// Head
@@ -52,7 +62,11 @@ public class ExcelHelperExt extends ExcelHelper
 		write(p_fileName, head, "bold", "0", "def", "gray", true, false);
 	}
 
-	public void writeIssues(String p_fileName, Map<Integer, Object[]> p_testingIssues, Map<Integer, Object[]> p_overtimeIssues, String p_hoursInMonth)
+	public void writeIssues(String p_fileName,
+			Map<Integer, Object[]> p_testingIssues,
+			Map<Integer, Object[]> p_overtimeIssues,
+			Map<Integer, Object[]> p_otherIssues,
+			String p_hoursInMonth)
 	{
 		// Formuals
 		Map<Integer, String[]> formulas = new HashMap<Integer, String[]>();
@@ -64,7 +78,7 @@ public class ExcelHelperExt extends ExcelHelper
 		// Write testing
 		write(p_fileName, p_testingIssues, "def", "0", "def", "def", true, false);
 
-		formulas.put(0, new String[] { "", "", "SUM(C10:C" + (p_testingIssues.size() + 9) + ")", "" });
+		formulas.put(0, new String[] { "", "", "SUM(C8:C" + (p_testingIssues.size() + 7) + ")", "" });
 		addFormula(p_fileName, formulas, false);
 
 		writeHeadOvertime(p_fileName);
@@ -74,7 +88,7 @@ public class ExcelHelperExt extends ExcelHelper
 			// Write Overtimes
 			write(p_fileName, p_overtimeIssues, "def", "0", "def", "def", true, false);
 			formulas.put(0,
-					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 12) + ":C" + (p_overtimeIssues.size() + p_testingIssues.size() + 11) + ")", "" });
+					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 10) + ":C" + (p_overtimeIssues.size() + p_testingIssues.size() + 9) + ")", "" });
 			addFormula(p_fileName, formulas, false);
 		}
 		else
@@ -83,7 +97,36 @@ public class ExcelHelperExt extends ExcelHelper
 			// Write Overtimes
 			write(p_fileName, issues, "def", "0", "def", "def", true, false);
 			formulas.put(0,
-					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 11) + ":C" + (p_testingIssues.size() + 11) + ")", "" });
+					new String[] { "", "", "SUM(C" + (p_testingIssues.size() + 9) + ":C" + (p_testingIssues.size() + 9) + ")", "" });
+			addFormula(p_fileName, formulas, false);
+		}
+
+		// Write vacations, abcenses
+		writeHeadOthers(p_fileName);
+
+		if (p_otherIssues.size() > 0)
+		{
+
+			write(p_fileName, p_otherIssues, "def", "0", "def", "def", true, false);
+			formulas.put(0,
+					new String[] {
+							"",
+							"",
+							"SUM(C" + (p_testingIssues.size() + p_overtimeIssues.size() + 12) + ":C"
+									+ (p_overtimeIssues.size() + p_testingIssues.size() + p_otherIssues.size() + 11)
+									+ ")", "" });
+			addFormula(p_fileName, formulas, false);
+		}
+		else
+		{
+			issues.put(0, new String[] { "", "", "", "" });
+			write(p_fileName, issues, "def", "0", "def", "def", true, false);
+			formulas.put(0,
+					new String[] {
+							"",
+							"",
+							"SUM(C" + (p_testingIssues.size() + p_overtimeIssues.size() + 12) + ":C" + (p_testingIssues.size() + +p_overtimeIssues.size() + 12)
+									+ ")", "" });
 			addFormula(p_fileName, formulas, false);
 		}
 

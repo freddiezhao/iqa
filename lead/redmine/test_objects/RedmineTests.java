@@ -39,9 +39,10 @@ public class RedmineTests extends TestBaseExt
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssuesDetailed(p_memberShortName);
 			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTestingDetailed(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimesDetailed(allIssues, p_memberShortName);
+			Map<Integer, Object[]> otherIssues = redmine().reportsPage().getOthersDetailed(allIssues, p_memberShortName);
 
 			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(filePath, testingIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeIssues(filePath, testingIssues, overtimeIssues, otherIssues, p_hoursInMonth);
 
 			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
@@ -81,9 +82,10 @@ public class RedmineTests extends TestBaseExt
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssuesDetailed(p_memberShortName);
 			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getTestingDetailed(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimesDetailed(allIssues, p_memberShortName);
+			Map<Integer, Object[]> otherIssues = redmine().reportsPage().getOthersDetailed(allIssues, p_memberShortName);
 
 			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(filePath, testingIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeIssues(filePath, testingIssues, overtimeIssues, otherIssues, p_hoursInMonth);
 
 			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
@@ -122,9 +124,10 @@ public class RedmineTests extends TestBaseExt
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberShortName);
 			Map<Integer, Object[]> defaultIssues = redmine().reportsPage().getDefaultIssues(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberShortName);
+			Map<Integer, Object[]> otherIssues = redmine().reportsPage().getOthers(allIssues, p_memberShortName);
 
 			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(filePath, defaultIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeIssues(filePath, defaultIssues, overtimeIssues, otherIssues, p_hoursInMonth);
 
 			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
@@ -163,9 +166,10 @@ public class RedmineTests extends TestBaseExt
 			Map<Integer, Object[]> allIssues = redmine().reportsPage().getIssues(p_memberShortName);
 			Map<Integer, Object[]> testingIssues = redmine().reportsPage().getDefaultIssues(allIssues, p_memberShortName);
 			Map<Integer, Object[]> overtimeIssues = redmine().reportsPage().getOvertimes(allIssues, p_memberShortName);
+			Map<Integer, Object[]> otherIssues = redmine().reportsPage().getOthers(allIssues, p_memberShortName);
 
 			excel().writeHead(filePath, p_memberFullName, p_memberPosition, p_memberLevel, p_memberRate);
-			excel().writeIssues(filePath, testingIssues, overtimeIssues, p_hoursInMonth);
+			excel().writeIssues(filePath, testingIssues, overtimeIssues, otherIssues, p_hoursInMonth);
 
 			sendToEmail(p_memberPosition, p_email, fileName, filePath);
 
@@ -191,7 +195,7 @@ public class RedmineTests extends TestBaseExt
 				p_email,
 				"igor.babar@together.com",
 				"[Monthly report][" + p_memberPosition + "][" + fileName + "]",
-				"text",
+				"May the Force be with you",
 				fileName,
 				filePath);
 	}
